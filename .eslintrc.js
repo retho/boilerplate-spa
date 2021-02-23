@@ -60,7 +60,7 @@ const commonRules = {
   'no-debugger': 'warn',
   'no-console': ['warn', {allow: ['error']}],
   'no-labels': 'error',
-  'no-shadow': ['error', {builtinGlobals: false, hoist: 'functions', allow: [] }],
+  'no-shadow': ['error', {builtinGlobals: false, hoist: 'functions', allow: []}],
   'no-constant-condition': 'warn',
   'no-unreachable': 'warn',
   'default-case': 'warn',
@@ -87,6 +87,11 @@ const restrictedImportsRule = {
       {
         name: '@reduxjs/toolkit',
         message: 'Import from utils/redux instead',
+      },
+      {
+        name: 'utils/router',
+        importNames: ['useLocation'],
+        message: `Url parsing must be handled within 'AppRoute' in src/router/routes`,
       },
       {
         name: 'react-toastify',

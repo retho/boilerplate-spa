@@ -1,4 +1,5 @@
 import React, {FC} from 'react';
+// eslint-disable-next-line no-restricted-imports
 import {matchRoute, parseQuery, useLocation} from 'utils/router';
 import NotFoundPage from 'components/pages/NotFoundPage';
 import * as routes from './routes';
