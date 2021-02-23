@@ -6,9 +6,7 @@ import Router from 'router';
 // eslint-disable-next-line no-restricted-imports
 import {Provider} from 'react-redux';
 import store from 'store';
-// eslint-disable-next-line no-restricted-imports
-import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import ToastContainer from 'components/atoms/ToastContainer';
 
 const Root: FC = () => (
   <React.StrictMode>

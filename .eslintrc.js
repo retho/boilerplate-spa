@@ -4,7 +4,7 @@ const namingRules = {
   '@typescript-eslint/consistent-type-definitions': ['error', 'type'], // * https://medium.com/@martin_hotell/interface-vs-type-alias-in-typescript-2-7-2a8f1777af4c
   "@typescript-eslint/naming-convention": [
     // * https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
-    "warn",
+    'warn',
     {
       selector: 'default',
       format: ['camelCase'],
