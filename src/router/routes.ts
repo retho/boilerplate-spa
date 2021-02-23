@@ -16,5 +16,4 @@ const createRoute = <P extends string | Empty, Q extends string | Empty, QP>(
 ): AppRoute<P, QP> => createRouteOrigin(pattern, routeRender, settings);
 
 export const dev = createRoute('/dev', devRender);
-
 export const devDemoQuery = createRoute('/dev/demo-query', devDemoQueryRender);

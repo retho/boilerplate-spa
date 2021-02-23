@@ -96,8 +96,30 @@ const restrictedImportsRule = {
   }],
 }
 
+const restrictedGlobals = [
+  {name: 'location', message: `Url parsing must be handled within 'AppRoute' in src/router/routes`},
+  // {name: 'localStorage', message: 'Use utils/localStorage instead'},
+];
+const restrictedGlobalsRule = {
+  'no-restricted-globals': [
+    'error',
+    ...restrictedGlobals,
+  ],
+  'no-restricted-properties': [
+    'error',
+    ...['window', 'global', 'globalThis'].map(
+      object => restrictedGlobals.map(x => ({
+        object,
+        property: x.name,
+        message: x.message,
+      }))
+    ).reduce((acc, curr) => [...acc, ...curr], []),
+  ],
+}
+
 const projectSpecificRules = {
   ...restrictedImportsRule,
+  ...restrictedGlobalsRule,
 }
 
 module.exports = {

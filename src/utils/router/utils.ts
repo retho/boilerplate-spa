@@ -83,5 +83,6 @@ export const useHistory = (): History<unknown> => {
 
 export const useLocation = (): Location => {
   useLocationOrigin();
+  // eslint-disable-next-line no-restricted-properties
   return window.location;
 };
