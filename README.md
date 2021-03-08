@@ -2,7 +2,7 @@
 # Quickstart
 
 ```
-git clone <url>
+git clone <repo>
 yarn
 npm start
 ```
