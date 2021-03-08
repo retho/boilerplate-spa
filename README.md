@@ -2,7 +2,7 @@
 # Quickstart
 
 ```
-git clone https://github.com/retho/boilerplate.git
+git clone ...
 yarn
 npm start
 ```
