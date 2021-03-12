@@ -11,7 +11,6 @@ type DevDemoQueryProps = {
 };
 const DevDemoQuery: FC<DevDemoQueryProps> = props => {
   const history = useHistory();
-  const {filters} = props.query;
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     history.replace(
@@ -29,6 +28,7 @@ const DevDemoQuery: FC<DevDemoQueryProps> = props => {
     );
   };
 
+  const {filters} = props.query;
   return (
     <div className={root()}>
       <input value={filters.search} onChange={handleSearchChange} />

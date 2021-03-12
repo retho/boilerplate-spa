@@ -67,6 +67,7 @@ const commonRules = {
   'default-case-last': 'warn',
   'eqeqeq': ['error', 'always', {null: 'ignore'}],
   '@typescript-eslint/array-type': ['warn', {default: 'array', readonly: 'array'}],
+  'react/destructuring-assignment': ['error', 'never'],
 }
 
 const restrictedImportsRule = {
