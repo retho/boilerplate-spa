@@ -31,8 +31,18 @@ const DevDemoQuery: FC<DevDemoQueryProps> = props => {
   const {filters} = props.query;
   return (
     <div className={root()}>
-      <input value={filters.search} onChange={handleSearchChange} />
-      {JSON.stringify(props.query)}
+      <div>
+        <label>search</label>
+        <input value={filters.search} onChange={handleSearchChange} />
+        <br />
+        <a>#tag1</a>
+        <a>#tag2</a>
+        <a>#tag3</a>
+        <br />
+        <a>sort by &quot;a&quot;</a>
+        <a>sort by &quot;b&quot;</a>
+      </div>
+      <div>{JSON.stringify(props.query)}</div>
     </div>
   );
 };

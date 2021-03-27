@@ -1,8 +1,6 @@
 import {SyntheticEvent, useReducer} from 'react';
 
-export const assertNever = (val: never, panic = false): void => {
-  if (panic) throw new Error(`Never error: ${val}`);
-};
+export const assertNever = (val: never): never => val;
 
 export const stopPropagation = (e: SyntheticEvent): void => e.stopPropagation();
 

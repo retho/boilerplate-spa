@@ -1,4 +1,13 @@
 
-.LobbyList {
+.DevDemoQuery {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5em;
 
+  * + * {
+    margin: 0 12px;
+  }
 }
