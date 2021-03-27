@@ -7,5 +7,6 @@
   "arrowParens": "avoid",
   "printWidth": 100,
   "bracketSpacing": false,
-  "jsxBracketSameLine": false
+  "jsxBracketSameLine": false,
+  "endOfLine": "lf"
 }

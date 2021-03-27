@@ -30,16 +30,15 @@ const namingRules = {
       selector: 'typeLike',
       format: ['PascalCase'],
     },
-    // {
-    //   selector: 'memberLike',
-    //   modifiers: ['requiresQuotes'],
-    //   format: null,
-    // },
     {
       selector: 'variable',
       types: ['boolean'],
       format: ['PascalCase'],
       prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
+    },
+    {
+      selector: 'memberLike',
+      format: null,
     },
   ]
 }
@@ -60,13 +59,15 @@ const commonRules = {
   'no-debugger': 'warn',
   'no-console': ['warn', {allow: ['error']}],
   'no-labels': 'error',
-  'no-shadow': ['error', {builtinGlobals: false, hoist: 'functions', allow: []}],
+  'no-shadow': 'off',
+  '@typescript-eslint/no-shadow': ['error'],
   'no-constant-condition': 'warn',
   'no-unreachable': 'warn',
   'default-case': 'warn',
   'default-case-last': 'warn',
   'eqeqeq': ['error', 'always', {null: 'ignore'}],
   '@typescript-eslint/array-type': ['warn', {default: 'array', readonly: 'array'}],
+  '@typescript-eslint/no-empty-function': 'off',
   'react/destructuring-assignment': ['error', 'never'],
 }
 
@@ -160,5 +161,14 @@ module.exports = {
   rules: {
     ...commonRules,
     ...projectSpecificRules,
-  }
+  },
+  overrides: [
+    {
+      // enable the rule specifically for JavaScript files
+      files: ["*.js", "*.jsx"],
+      rules: {
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+      }
+    }
+  ]
 }
