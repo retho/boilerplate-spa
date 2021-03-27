@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 const namingRules = {
   '@typescript-eslint/consistent-type-definitions': ['error', 'type'], // * https://medium.com/@martin_hotell/interface-vs-type-alias-in-typescript-2-7-2a8f1777af4c
   '@typescript-eslint/naming-convention': [
@@ -44,8 +42,9 @@ const namingRules = {
 }
 
 const noCatchReason = 'Throwing errors should acts like panic that can not be catched, except for external libraries. Please, use algebraic data types ADT instead.';
-// https://eslint.org/docs/rules/no-restricted-syntax
-// https://astexplorer.net/
+// * https://eslint.org/docs/rules/no-restricted-syntax
+// * https://eslint.org/docs/developer-guide/selectors
+// * https://astexplorer.net/
 const noRestrictedSyntax = {
   'no-restricted-syntax': [
     'error',

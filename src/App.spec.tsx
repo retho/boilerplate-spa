@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import Root from './Root';
+import App from './App';
 
 test('renders without errors', () => {
-  render(<Root />);
+  render(<App />);
 });
