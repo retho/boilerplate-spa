@@ -43,8 +43,34 @@ const namingRules = {
   ]
 }
 
+const noCatchReason = 'Throwing errors should acts like panic that can not be catched, except for external libraries. Please, use algebraic data types ADT instead.';
+// https://eslint.org/docs/rules/no-restricted-syntax
+// https://astexplorer.net/
+const noRestrictedSyntax = {
+  'no-restricted-syntax': [
+    'error',
+    {
+      selector: 'ClassDeclaration',
+      message: 'Class declarations are not allowed.'
+    },
+    {
+      selector: 'TryStatement',
+      message: noCatchReason,
+    },
+    {
+      selector: `MemberExpression > Identifier[name='catch']`,
+      message: noCatchReason,
+    },
+    {
+      selector: `MemberExpression > Identifier[name='finally']`,
+      message: noCatchReason,
+    },
+  ]
+}
+
 const commonRules = {
   ...namingRules,
+  ...noRestrictedSyntax,
   'react-hooks/rules-of-hooks': 'error',
   'react-hooks/exhaustive-deps': 'off',
   '@typescript-eslint/explicit-function-return-type': 'off',
