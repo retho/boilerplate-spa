@@ -3,4 +3,4 @@ build/
 
 scripts/
 .eslintrc.js
-.eslintrc.common.js
+.eslintrc.*.js
