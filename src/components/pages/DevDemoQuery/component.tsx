@@ -5,7 +5,7 @@ import {stringifyRoute, useHistory} from 'utils/router';
 import {QueryPayload} from './query';
 import './styles.scss';
 
-const root = bem(module.id, 'DevDemoQuery');
+const bemRoot = bem(module.id, 'DevDemoQuery');
 type DevDemoQueryProps = {
   query: QueryPayload;
 };
@@ -30,7 +30,7 @@ const DevDemoQuery: FC<DevDemoQueryProps> = props => {
 
   const {filters} = props.query;
   return (
-    <div className={root()}>
+    <div className={bemRoot()}>
       <div>
         <label>search</label>
         <input value={filters.search} onChange={handleSearchChange} />
