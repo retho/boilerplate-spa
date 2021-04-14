@@ -1,13 +1,12 @@
-// eslint-disable-next-line no-restricted-imports
-import {withNaming, ClassNameFormatter} from '@bem-react/classname';
+import {genBemFormatter, BemFormatter} from './core';
 
 export const cn = (...args: (boolean | null | undefined | string)[]): string =>
   args.filter(x => x).join(' ');
 
-type Initializer = (moduleId: string, blockName: string) => ClassNameFormatter;
+type Initializer = (moduleId: string, blockName: string) => BemFormatter;
 
 const existingBlocks: Record<string, string> = {};
-const rawInitializer = withNaming({n: '', e: '__', m: '--', v: '_'});
+const rawInitializer = genBemFormatter({n: '', e: '__', m: '--', v: '_'});
 export const bem: Initializer =
   process.env.NODE_ENV === 'production'
     ? (_, blockName) => rawInitializer(blockName)

@@ -4,10 +4,6 @@ const restrictedImportsRule = {
   'no-restricted-imports': ['error', {
     paths: [
       {
-        name: '@bem-react/classname',
-        message: 'Import from utils/bem instead',
-      },
-      {
         name: 'react-router-dom',
         message: 'Import from utils/router instead',
       },
