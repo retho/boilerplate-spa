@@ -41,7 +41,7 @@ const namingRules = {
   ]
 }
 
-const noCatchReason = 'Throwing errors should acts like panic that can not be catched, except for external libraries. Use algebraic data types instead (like Result<E, R> in src/utils/common).';
+const noCatchReason = 'Throwing errors should acts like panic that can not be catched, except for external libraries. Use algebraic data types (ADT) instead (like Result<E, R> in src/utils/common).';
 // * https://eslint.org/docs/rules/no-restricted-syntax
 // * https://eslint.org/docs/developer-guide/selectors
 // * https://astexplorer.net/

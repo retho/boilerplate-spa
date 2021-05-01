@@ -15,10 +15,9 @@ export type Flavor<U extends symbol, T> = {[flavor]?: U} & T;
 export const nbsp = '\xa0';
 export const dash = '—';
 
-export type Result<E, R> = ResultErr<E> | ResultOk<R>;
-type ResultErr<E> = {kind: 'err'; err: E};
-type ResultOk<R> = {kind: 'ok'; payload: R};
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type ADT<K extends string, P = {}> = {kind: K} & P;
+
+export type Result<E, R> = ADT<'err', {err: E}> | ADT<'ok', {payload: R}>;
 export const ok = <E, R>(payload: R): Result<E, R> => ({kind: 'ok', payload});
 export const err = <E, R>(error: E): Result<E, R> => ({kind: 'err', err: error});
-export const isOk = <E, R>(r: Result<E, R>): r is ResultOk<R> => r.kind === 'ok';
-export const isErr = <E, R>(r: Result<E, R>): r is ResultErr<E> => r.kind === 'err';
