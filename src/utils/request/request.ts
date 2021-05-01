@@ -2,23 +2,20 @@ import {useMemo} from 'react';
 import {useStore} from 'utils/redux';
 import {AppStore} from 'store';
 import {logoutForce} from 'store/slices/auth';
+import {ADT, err, ok, Result} from 'utils/common';
 
 type ReplyErrorApi = {
-  kind: 'api';
   status: number;
   headers: Headers;
   data: unknown;
 };
-type ReplyErrorUnauthorized = {kind: 'unauthorized'};
-type ReplyErrorUnknown = {kind: 'unknown'; err: unknown};
-type ReplyError = ReplyErrorApi | ReplyErrorUnauthorized | ReplyErrorUnknown;
-type ReplySuccess<D> = {
-  kind: 'success';
+type ReplyError = ADT<'api', ReplyErrorApi> | ADT<'unauthorized'> | ADT<'unknown', {err: unknown}>;
+type ReplyPayload<D> = {
   status: number;
   headers: Headers;
   data: D;
 };
-type Reply<D> = ReplySuccess<D> | ReplyError;
+type Reply<D> = Result<ReplyError, ReplyPayload<D>>;
 
 export type RequestParams<D> = {
   res2data: (res: Response) => Promise<D>;
@@ -44,37 +41,36 @@ export const genRequest = (store: AppStore): Requester => <D>(
         async (res): Promise<Reply<D>> => {
           if (res.ok) {
             const data = await res2data(res);
-            return {
-              kind: 'success',
+            return ok({
               status: res.status,
               headers: res.headers,
               data,
-            };
+            });
           }
           if (res.status === 401) {
             store.dispatch(logoutForce());
-            return {kind: 'unauthorized'};
+            return err({kind: 'unauthorized'});
           }
           const data = await res
             .clone()
             .json()
             // eslint-disable-next-line no-restricted-syntax
             .catch(() => res.clone().text());
-          return {
+          return err({
             kind: 'api',
             status: res.status,
             headers: res.headers,
             data,
-          };
+          });
         }
       )
       // eslint-disable-next-line no-restricted-syntax
       .catch(
-        (err): Reply<D> => {
-          return {
+        (error): Reply<D> => {
+          return err({
             kind: 'unknown',
-            err,
-          };
+            err: error,
+          });
         }
       )
   );

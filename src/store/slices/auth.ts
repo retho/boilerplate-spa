@@ -29,10 +29,10 @@ const {setToken} = slice.actions;
 
 export const login = (username: string): AppThunk => async (dispatch, getState, {request}) => {
   const reply = await request(loginReq(username));
-  if (reply.kind === 'success') {
-    localStorage.setItem('token', reply.data.token);
-    dispatch(setToken(reply.data.token));
-  } else if (reply.kind !== 'unauthorized') {
+  if (reply.kind === 'ok') {
+    localStorage.setItem('token', reply.payload.data.token);
+    dispatch(setToken(reply.payload.data.token));
+  } else if (reply.err.kind !== 'unauthorized') {
     notifyError('Something went wrong');
   }
 };
