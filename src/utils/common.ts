@@ -15,6 +15,7 @@ export type Flavor<U extends symbol, T> = {[flavor]?: U} & T;
 export const nbsp = '\xa0';
 export const dash = '—';
 
+// * https://stackoverflow.com/questions/33915459/algebraic-data-types-in-typescript
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type ADT<K extends string, P = {}> = {kind: K} & P;
 
