@@ -11,28 +11,30 @@ import {
   useLocation as useLocationOrigin,
 } from 'react-router-dom';
 import {History} from 'history';
+import {Brand} from 'utils/common';
 
 const arrayFormat = 'bracket' as const;
 
 export {Redirect};
+
+const uribrand = Symbol('Uri');
+export type Uri = Brand<typeof uribrand, string>;
 
 export const stringifyQuery = qsStringifyQuery;
 export const stringifyRoute = <P extends Record<string, string>, Q extends unknown>(
   route: Route<unknown, P, Q>,
   params: P,
   queryPayload: Q
-): string => {
+): Uri => {
   const pattern = new UrlPattern(route.pattern);
   const query = route.queryableInstance.toQuery(queryPayload);
-  return (
-    pattern.stringify(params && mapValues(params, encodeURIComponent)) +
+  return (pattern.stringify(params && mapValues(params, encodeURIComponent)) +
     (isEmpty(query)
       ? ''
       : `?${stringifyQuery(
           mapValues(query, x => (x && x.length === 1 ? x[0] || undefined : x)),
           {arrayFormat}
-        )}`)
-  );
+        )}`)) as Uri;
 };
 
 export const matchRoute = <P extends Record<string, string>, Q>(
@@ -75,8 +77,8 @@ export const useHistory = (): History<unknown> => {
   return useMemo(() => {
     return {
       ...history,
-      push: (path: string) => history.push(encodeURI(path)),
-      replace: (path: string) => history.replace(encodeURI(path)),
+      push: (path: Uri) => history.push(encodeURI(path)),
+      replace: (path: Uri) => history.replace(encodeURI(path)),
     };
   }, []);
 };
