@@ -11,8 +11,8 @@ export type {PayloadAction} from '@reduxjs/toolkit';
 
 const slicenameCreator = () => {
   if (process.env.NODE_ENV === 'development') {
-    const alreadyUsed: Record<string, string> = {};
-    return (moduleId: string, sn: string) => {
+    const alreadyUsed: Record<string, ModuleId> = {};
+    return (moduleId: ModuleId, sn: string) => {
       const alreadyUsedSliceModule = alreadyUsed[sn];
       if (alreadyUsedSliceModule)
         throw new Error(
@@ -22,7 +22,7 @@ const slicenameCreator = () => {
       return sn;
     };
   }
-  return (_: string, sn: string) => sn;
+  return (_: ModuleId, sn: string) => sn;
 };
 export const createSliceName = slicenameCreator();
 
