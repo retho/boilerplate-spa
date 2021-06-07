@@ -10,7 +10,6 @@ import {
   Redirect,
   useLocation as useLocationOrigin,
 } from 'react-router-dom';
-import {History} from 'history';
 import {Brand} from 'utils/common';
 
 const arrayFormat = 'bracket' as const;
@@ -72,11 +71,14 @@ export const parseQuery = (search: string): Query => {
   return proxy;
 };
 
-export const useHistory = (): History<unknown> => {
+type History = {
+  push: (path: Uri) => void;
+  replace: (path: Uri) => void;
+};
+export const useHistory = (): History => {
   const history = useHistoryOrigin();
   return useMemo(() => {
     return {
-      ...history,
       push: (path: Uri) => history.push(encodeURI(path)),
       replace: (path: Uri) => history.replace(encodeURI(path)),
     };
