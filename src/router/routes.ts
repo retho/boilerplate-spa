@@ -14,4 +14,4 @@ const createRoute = <P extends Record<string, string>, Q>(
 ): AppRoute<P, Q> => createRouteOrigin(pattern, routeRender, settings);
 
 export const dev = createRoute('/dev', devRender);
-export const devDemoRouter = createRoute('/dev/demo-query/:tab', devDemoRouterRender);
+export const devDemoRouter = createRoute('/dev/demo-router/:tab', devDemoRouterRender);
