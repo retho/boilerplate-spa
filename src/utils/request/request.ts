@@ -36,6 +36,7 @@ export const genRequest = (store: AppStore): Requester => <D>(
         // eslint-disable-next-line @typescript-eslint/naming-convention
         Authorization: token ? `Custom ${token}` : '',
       },
+      credentials: 'omit',
     })
       .then(
         async (res): Promise<Reply<D>> => {

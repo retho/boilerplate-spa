@@ -32,7 +32,7 @@ export const login = (username: string): AppThunk => async (dispatch, getState, 
   if (reply.kind === 'ok') {
     localStorage.setItem('token', reply.payload.data.token);
     dispatch(setToken(reply.payload.data.token));
-  } else if (reply.err.kind !== 'unauthorized') {
+  } else if (reply.error.kind !== 'unauthorized') {
     notifyError('Something went wrong');
   }
 };

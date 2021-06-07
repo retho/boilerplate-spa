@@ -16,7 +16,7 @@ const slicenameCreator = () => {
       const alreadyUsedSliceModule = alreadyUsed[sn];
       if (alreadyUsedSliceModule)
         throw new Error(
-          `Slice with name "${sn}" already exists in modules '${alreadyUsedSliceModule}' and 'moduleId'`
+          `Slice with name '${sn}' already exists in modules "${alreadyUsedSliceModule}" and "${moduleId}"`
         );
       alreadyUsed[sn] = moduleId;
       return sn;

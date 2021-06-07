@@ -8,6 +8,10 @@ const restrictedImportsRule = {
         message: 'Import from utils/router instead',
       },
       {
+        name: 'redux',
+        message: 'Import from utils/redux instead',
+      },
+      {
         name: 'react-redux',
         message: 'Import from utils/redux instead',
       },

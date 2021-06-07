@@ -86,7 +86,7 @@ const commonRules = {
   'no-labels': 'error',
   'no-shadow': 'off',
   '@typescript-eslint/no-shadow': ['error'],
-  'no-constant-condition': 'warn',
+  'no-constant-condition': ['warn', {checkLoops: false}],
   'no-unreachable': 'warn',
   'default-case': 'warn',
   'default-case-last': 'warn',
