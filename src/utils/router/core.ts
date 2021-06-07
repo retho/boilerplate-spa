@@ -1,42 +1,42 @@
 const empty = Symbol('empty');
 export type Empty = typeof empty;
 
-export type Query<Q extends string | Empty> = Record<Q, [undefined] | string[]>;
+export type Query = Record<string, [undefined] | string[]>;
 
-export type Queryable<Q extends string | Empty, D extends unknown> = {
-  toQuery: (payload: D) => Query<Q>;
-  fromQuery: (query: Query<Q>) => D;
+export type Queryable<T extends unknown> = {
+  toQuery: (payload: T) => Query;
+  fromQuery: (query: Query) => T;
 };
-export const emptyQueryableInstance: Queryable<Empty, null> = {
+export const emptyQueryableInstance: Queryable<null> = {
   fromQuery: () => null,
-  toQuery: () => ({} as Query<Empty>),
+  toQuery: () => ({}),
 };
 
-export type Route<S extends unknown, P extends string | Empty, QP> = {
+export type Route<S extends unknown, P extends string | Empty, Q> = {
   pattern: string;
-  queryableInstance: Queryable<string | Empty, QP>;
-  render: RouteRender<P, QP>;
+  queryableInstance: Queryable<Q>;
+  render: RouteRender<P, Q>;
   settings: S;
 };
 
-export type RouteRender<P extends string | Empty, QP> = (
+export type RouteRender<P extends string | Empty, Q> = (
   params: Record<P, string>,
-  queryPayload: QP
+  queryPayload: Q
 ) => JSX.Element;
 
-export const createRouteRender = <Q extends string | Empty, QP>(
-  queryableInstance: Queryable<Q, QP>
-) => <P extends string | Empty = Empty>(
-  render: RouteRender<P, QP>
-): [Queryable<Q, QP>, RouteRender<P, QP>] => [queryableInstance, render];
+export const createRouteRender = <Q>(queryableInstance: Queryable<Q>) => <
+  P extends string | Empty = Empty
+>(
+  render: RouteRender<P, Q>
+): [Queryable<Q>, RouteRender<P, Q>] => [queryableInstance, render];
 
-export const createRoute = <S, P extends string | Empty, Q extends string | Empty, QP>(
+export const createRoute = <S, P extends string | Empty, Q>(
   pattern: string,
-  [queryableInstance, render]: [Queryable<Q, QP>, RouteRender<P, QP>],
+  [queryableInstance, render]: [Queryable<Q>, RouteRender<P, Q>],
   settings: S
-): Route<S, P, QP> => ({
+): Route<S, P, Q> => ({
   pattern,
-  queryableInstance: (queryableInstance as unknown) as Queryable<string | Empty, QP>,
+  queryableInstance: (queryableInstance as unknown) as Queryable<Q>,
   render,
   settings,
 });

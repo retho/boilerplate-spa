@@ -6,7 +6,7 @@ import * as routes from './routes';
 import {AppRoute} from './routes';
 import {Empty, Query} from 'utils/router/core';
 
-const findCurrentRoute = (pathname: string, query: Query<string | Empty>) => {
+const findCurrentRoute = (pathname: string, query: Query) => {
   for (const r of Object.values(routes)) {
     const route = r as AppRoute<string | Empty, unknown>;
     const matched = matchRoute(route, pathname, query);

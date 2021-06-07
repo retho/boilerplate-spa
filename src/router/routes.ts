@@ -9,9 +9,9 @@ import {devRender, devDemoQueryRender} from './routeRenders';
 
 type AppRouteSettings = null;
 export type AppRoute<P extends string | Empty, QP extends unknown> = Route<AppRouteSettings, P, QP>;
-const createRoute = <P extends string | Empty, Q extends string | Empty, QP>(
+const createRoute = <P extends string | Empty, QP>(
   pattern: string,
-  routeRender: [Queryable<Q, QP>, RouteRender<P, QP>],
+  routeRender: [Queryable<QP>, RouteRender<P, QP>],
   settings: AppRouteSettings = null
 ): AppRoute<P, QP> => createRouteOrigin(pattern, routeRender, settings);
 
