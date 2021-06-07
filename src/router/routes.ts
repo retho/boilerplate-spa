@@ -1,19 +1,17 @@
-import {
-  createRoute as createRouteOrigin,
-  Route,
-  Empty,
-  RouteRender,
-  Queryable,
-} from 'utils/router/core';
-import {devRender, devDemoQueryRender} from './routeRenders';
+import {createRoute as createRouteOrigin, Route, RouteRender, Queryable} from 'utils/router/core';
+import {devRender, devDemoRouterRender} from './routeRenders';
 
 type AppRouteSettings = null;
-export type AppRoute<P extends string | Empty, QP extends unknown> = Route<AppRouteSettings, P, QP>;
-const createRoute = <P extends string | Empty, QP>(
+export type AppRoute<P extends Record<string, string>, Q extends unknown> = Route<
+  AppRouteSettings,
+  P,
+  Q
+>;
+const createRoute = <P extends Record<string, string>, Q>(
   pattern: string,
-  routeRender: [Queryable<QP>, RouteRender<P, QP>],
+  routeRender: [Queryable<Q>, RouteRender<P, Q>],
   settings: AppRouteSettings = null
-): AppRoute<P, QP> => createRouteOrigin(pattern, routeRender, settings);
+): AppRoute<P, Q> => createRouteOrigin(pattern, routeRender, settings);
 
 export const dev = createRoute('/dev', devRender);
-export const devDemoQuery = createRoute('/dev/demo-query', devDemoQueryRender);
+export const devDemoRouter = createRoute('/dev/demo-query/:tab', devDemoRouterRender);

@@ -1,6 +1,3 @@
-const empty = Symbol('empty');
-export type Empty = typeof empty;
-
 export type Query = Record<string, [undefined] | string[]>;
 
 export type Queryable<T extends unknown> = {
@@ -12,25 +9,25 @@ export const emptyQueryableInstance: Queryable<null> = {
   toQuery: () => ({}),
 };
 
-export type Route<S extends unknown, P extends string | Empty, Q> = {
+export type Route<S extends unknown, P extends Record<string, string>, Q> = {
   pattern: string;
   queryableInstance: Queryable<Q>;
   render: RouteRender<P, Q>;
   settings: S;
 };
 
-export type RouteRender<P extends string | Empty, Q> = (
-  params: Record<P, string>,
+export type RouteRender<P extends Record<string, string>, Q> = (
+  params: P,
   queryPayload: Q
 ) => JSX.Element;
 
 export const createRouteRender = <Q>(queryableInstance: Queryable<Q>) => <
-  P extends string | Empty = Empty
+  P extends Record<string, string> = Record<never, string>
 >(
   render: RouteRender<P, Q>
 ): [Queryable<Q>, RouteRender<P, Q>] => [queryableInstance, render];
 
-export const createRoute = <S, P extends string | Empty, Q>(
+export const createRoute = <S, P extends Record<string, string>, Q>(
   pattern: string,
   [queryableInstance, render]: [Queryable<Q>, RouteRender<P, Q>],
   settings: S

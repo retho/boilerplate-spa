@@ -4,11 +4,11 @@ import {matchRoute, parseQuery, useLocation} from 'utils/router';
 import NotFoundPage from 'components/pages/NotFoundPage';
 import * as routes from './routes';
 import {AppRoute} from './routes';
-import {Empty, Query} from 'utils/router/core';
+import {Query} from 'utils/router/core';
 
 const findCurrentRoute = (pathname: string, query: Query) => {
   for (const r of Object.values(routes)) {
-    const route = r as AppRoute<string | Empty, unknown>;
+    const route = r as AppRoute<Record<string, string>, unknown>;
     const matched = matchRoute(route, pathname, query);
     if (matched) {
       const [params, queryPayload] = matched;

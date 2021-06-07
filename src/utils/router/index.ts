@@ -1,5 +1,5 @@
 import {useMemo} from 'react';
-import {Route, Empty, Query} from './core';
+import {Route, Query} from './core';
 import UrlPattern from 'url-pattern';
 import {stringify as qsStringifyQuery, parse as qsParse} from 'query-string';
 import {mapValues, isEmpty} from 'lodash-es';
@@ -17,9 +17,9 @@ const arrayFormat = 'bracket' as const;
 export {Redirect};
 
 export const stringifyQuery = qsStringifyQuery;
-export const stringifyRoute = <P extends string | Empty, Q extends unknown>(
+export const stringifyRoute = <P extends Record<string, string>, Q extends unknown>(
   route: Route<unknown, P, Q>,
-  params: Record<P extends Empty ? never : P, string>,
+  params: P,
   queryPayload: Q
 ): string => {
   const pattern = new UrlPattern(route.pattern);
@@ -35,12 +35,12 @@ export const stringifyRoute = <P extends string | Empty, Q extends unknown>(
   );
 };
 
-export const matchRoute = <P extends string | Empty, Q>(
+export const matchRoute = <P extends Record<string, string>, Q>(
   route: Route<unknown, P, Q>,
   pathname: string,
   query: Query
-): null | [Record<P, string>, Q] => {
-  const matched: {params: Record<P, string>} | null = matchPath(pathname, {
+): null | [P, Q] => {
+  const matched: {params: P} | null = matchPath(pathname, {
     path: route.pattern,
     exact: true,
   });
@@ -50,7 +50,7 @@ export const matchRoute = <P extends string | Empty, Q>(
   const params = mapValues(matched.params, decodeURIComponent);
   const queryPayload = route.queryableInstance.fromQuery(query);
 
-  return [params, queryPayload];
+  return [params as P, queryPayload];
 };
 
 export const parseQuery = (search: string): Query => {
