@@ -1,3 +1,5 @@
+import {compact} from 'lodash-es';
+
 type Preset = {
   n?: string;
   e?: string;
@@ -17,20 +19,24 @@ export const genBemFormatter = (preset: Preset) => (blockName: string): BemForma
   const blockOrElemName =
     preset.n + blockName + (typeof elemOrMods === 'string' ? preset.e + elemOrMods : '');
   const modifiers = typeof elemOrMods === 'string' ? argMods : elemOrMods;
-  const classNames: string[] = [blockOrElemName];
 
-  for (const mod in modifiers) {
-    const classNameWithModifier = blockOrElemName + preset.m + mod;
-    const value = modifiers[mod];
-    if (value === false) continue;
-    if (value === true) {
-      classNames.push(classNameWithModifier);
-      continue;
-    }
-    const vals = Array.isArray(value) ? value : [value];
+  const modClassNames =
+    modifiers &&
+    Object.keys(modifiers)
+      .map(mod => {
+        const classNameWithModifier = blockOrElemName + preset.m + mod;
+        const value = modifiers[mod];
+        if (value === false) return [];
+        if (value === true) {
+          return [classNameWithModifier];
+        }
+        const vals = Array.isArray(value) ? value : [value];
 
-    vals.forEach(v => v && classNames.push(classNameWithModifier + preset.v + v));
-  }
+        return compact(vals.map(v => v && classNameWithModifier + preset.v + v));
+      })
+      .flat();
+
+  const classNames: string[] = [blockOrElemName, ...(modClassNames || [])];
 
   return classNames.join(' ');
 };

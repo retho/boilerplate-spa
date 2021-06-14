@@ -48,10 +48,10 @@ const noCatchReason = 'Throwing errors should acts like panic that can not be ca
 const noRestrictedSyntax = {
   'no-restricted-syntax': [
     'error',
-    {
-      selector: 'ClassDeclaration',
-      message: 'Class declarations are not allowed.'
-    },
+    // { // 'fp/no-class' used instead
+    //   selector: 'ClassDeclaration',
+    //   message: 'Class declarations are not allowed.'
+    // },
     {
       selector: 'TryStatement',
       message: noCatchReason,
@@ -95,6 +95,8 @@ const commonRules = {
   '@typescript-eslint/no-empty-function': 'off',
   'react/destructuring-assignment': ['error', 'never'],
   'no-param-reassign': ['error', {props: true}],
+  'fp/no-mutating-methods': ['error', {allowedObjects: ['history']}],
+  'fp/no-class': 'error',
 }
 
 module.exports = commonRules;

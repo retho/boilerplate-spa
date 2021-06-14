@@ -80,7 +80,8 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'react',
-    'react-hooks'
+    'react-hooks',
+    'fp',
   ],
   settings: {
     react: {
