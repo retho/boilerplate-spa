@@ -3,6 +3,7 @@ import {routes} from 'router';
 import {bem} from 'utils/bem';
 import {nbsp} from 'utils/common';
 import {stringifyRoute, useHistory} from 'utils/router';
+import DemoSorter, {DemoSort} from './DemoSorter';
 import {QueryPayload} from './query';
 import './styles.scss';
 
@@ -30,6 +31,7 @@ const DevDemoRouter: FC<Props> = props => {
         }
       )
     );
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     history.replace(
       stringifyRoute(
@@ -41,6 +43,18 @@ const DevDemoRouter: FC<Props> = props => {
             ...props.query.filters,
             search: e.target.value,
           },
+        }
+      )
+    );
+  };
+  const handleSortChange = (sort: null | DemoSort<'a' | 'b'>) => {
+    history.replace(
+      stringifyRoute(
+        routes.devDemoRouter,
+        {tab: props.tab},
+        {
+          ...props.query,
+          sort,
         }
       )
     );
@@ -63,8 +77,8 @@ const DevDemoRouter: FC<Props> = props => {
         <a>#tag2</a>
         <a>#tag3</a>
         <br />
-        <a>sort by &quot;a&quot;</a>
-        <a>sort by &quot;b&quot;</a>
+        <DemoSorter title="a" field="a" value={props.query.sort} onChange={handleSortChange} />
+        <DemoSorter title="b" field="b" value={props.query.sort} onChange={handleSortChange} />
       </div>
       <div>
         activeTab={props.tab}

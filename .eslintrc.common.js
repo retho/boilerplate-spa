@@ -28,12 +28,12 @@ const namingRules = {
       selector: 'typeLike',
       format: ['PascalCase'],
     },
-    {
-      selector: 'variable',
-      types: ['boolean'],
-      format: ['PascalCase'],
-      prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
-    },
+    // {
+    //   selector: 'variable',
+    //   types: ['boolean'],
+    //   format: ['PascalCase'],
+    //   prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
+    // },
     {
       selector: 'memberLike',
       format: null,

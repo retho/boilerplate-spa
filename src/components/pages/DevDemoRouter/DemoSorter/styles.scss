@@ -1,0 +1,23 @@
+
+.DemoSorter {
+  border: 1px solid #000;
+  display: inline-flex;
+  align-items: center;
+  background-color: #ccc;
+  cursor: pointer;
+
+  &__icon-wrapper {
+    flex: 0 0 12px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    width: 12px;
+  }
+
+  &__title {
+    flex: 0 0 auto;
+    padding: 2px 12px;
+  }
+}
