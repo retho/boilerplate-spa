@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-type ModuleId = string & {brand: 'ModuleId'};
+type ModuleId = string & {__brand: 'ModuleId'};
 
 interface NodeModule extends __WebpackModuleApi.Module {
   id: ModuleId;

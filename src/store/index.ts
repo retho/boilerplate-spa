@@ -29,11 +29,11 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
 }
 
 export type AppStore = typeof store;
-export type RootState = ReturnType<typeof reducer>;
+export type AppRootState = ReturnType<typeof reducer>;
 export type AppDispatch = typeof store.dispatch;
-export type AppThunk<R = void> = ThunkAction<
+export type AppThunk<R = Promise<void>> = ThunkAction<
   R,
-  RootState,
+  AppRootState,
   typeof thunkExtraArgument,
   Action<string>
 >;

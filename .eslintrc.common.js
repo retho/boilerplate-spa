@@ -94,6 +94,7 @@ const commonRules = {
   '@typescript-eslint/array-type': ['warn', {default: 'array', readonly: 'array'}],
   '@typescript-eslint/no-empty-function': 'off',
   'react/destructuring-assignment': ['error', 'never'],
+  'no-param-reassign': ['error', {props: true}],
 }
 
 module.exports = commonRules;
