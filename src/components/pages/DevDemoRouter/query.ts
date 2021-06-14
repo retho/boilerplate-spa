@@ -5,13 +5,13 @@ type Filters = {
   search: string;
   tags: string[];
 };
-type Sort = {
-  field: string;
-  order: 'asc' | 'desc';
+type Sort<F extends string> = {
+  field: F;
+  desc: boolean;
 };
 export type QueryPayload = {
   filters: Filters;
-  sorts: Sort[];
+  sorts: Sort<'a' | 'b'>[];
 };
 
 const filters2query = (filters: Filters): Query => {
@@ -27,15 +27,15 @@ const query2filters = (query: Query): Filters => {
   };
 };
 
-const sorts2query = (sorts: Sort[]): Query => {
+const sorts2query = <F extends string>(sorts: Sort<F>[]): Query => {
   return {
-    sortBy: sorts.map(({field, order}) => `${field};${order}`),
+    sortBy: sorts.map(({field, desc}) => `${field};${desc ? 'desc' : 'asc'}`),
   };
 };
-const query2sorts = (query: Query): Sort[] => {
+const query2sorts = <F extends string>(query: Query): Sort<F>[] => {
   return compact(query.sortBy).map(x => {
     const [field, order] = x.split(';');
-    return {field, order: order as 'asc' | 'desc'};
+    return {field: field as F, desc: order === 'desc'};
   });
 };
 

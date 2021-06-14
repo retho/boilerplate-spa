@@ -1,6 +1,7 @@
-import React, {FC} from 'react';
+import React, {FC, Fragment} from 'react';
 import {routes} from 'router';
 import {bem} from 'utils/bem';
+import {nbsp} from 'utils/common';
 import {stringifyRoute, useHistory} from 'utils/router';
 import {QueryPayload} from './query';
 import './styles.scss';
@@ -19,6 +20,16 @@ type Props = {
 const DevDemoRouter: FC<Props> = props => {
   const history = useHistory();
 
+  const handleTabChange = (tab: DevDemoRouterTab) =>
+    history.push(
+      stringifyRoute(
+        routes.devDemoRouter,
+        {tab},
+        {
+          ...props.query,
+        }
+      )
+    );
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     history.replace(
       stringifyRoute(
@@ -34,18 +45,7 @@ const DevDemoRouter: FC<Props> = props => {
       )
     );
   };
-  const handleTabChange = (tab: DevDemoRouterTab) =>
-    history.push(
-      stringifyRoute(
-        routes.devDemoRouter,
-        {tab},
-        {
-          ...props.query,
-        }
-      )
-    );
 
-  const {filters} = props.query;
   return (
     <div className={bemRoot()}>
       <div>
@@ -57,7 +57,7 @@ const DevDemoRouter: FC<Props> = props => {
           ))}
         </div>
         <label>search</label>
-        <input value={filters.search} onChange={handleSearchChange} />
+        <input value={props.query.filters.search} onChange={handleSearchChange} />
         <br />
         <a>#tag1</a>
         <a>#tag2</a>
@@ -69,7 +69,15 @@ const DevDemoRouter: FC<Props> = props => {
       <div>
         activeTab={props.tab}
         <br />
-        {JSON.stringify(props.query)}
+        {JSON.stringify(props.query, null, 4)
+          .replaceAll(' ', nbsp)
+          .split('\n')
+          .map((x, ix) => (
+            <Fragment key={ix}>
+              {x}
+              <br />
+            </Fragment>
+          ))}
       </div>
     </div>
   );

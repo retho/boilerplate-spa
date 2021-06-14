@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import React, {FC, useMemo} from 'react';
 import {Route, Query} from './core';
 import UrlPattern from 'url-pattern';
 import {stringify as qsStringifyQuery, parse as qsParse} from 'query-string';
@@ -7,17 +7,17 @@ import {mapValues, isEmpty} from 'lodash-es';
 import {
   matchPath,
   useHistory as useHistoryOrigin,
-  Redirect,
+  Redirect as RedirectOrigin,
   useLocation as useLocationOrigin,
 } from 'react-router-dom';
 import {Brand} from 'utils/common';
 
-const arrayFormat = 'bracket' as const;
-
-export {Redirect};
-
 const uribrand = Symbol('Uri');
 export type Uri = Brand<typeof uribrand, string>;
+
+export const Redirect: FC<{to: Uri}> = props => <RedirectOrigin to={props.to} />;
+
+const array_format = 'bracket' as const;
 
 export const stringifyQuery = qsStringifyQuery;
 export const stringifyRoute = <P extends Record<string, string>, Q extends unknown>(
@@ -32,7 +32,7 @@ export const stringifyRoute = <P extends Record<string, string>, Q extends unkno
       ? ''
       : `?${stringifyQuery(
           mapValues(query, x => (x && x.length === 1 ? x[0] || undefined : x)),
-          {arrayFormat}
+          {arrayFormat: array_format}
         )}`)) as Uri;
 };
 
@@ -59,7 +59,7 @@ export const parseQuery = (search: string): Query => {
     qsParse(search, {
       parseBooleans: false,
       parseNumbers: false,
-      arrayFormat,
+      arrayFormat: array_format,
     }),
     x => (Array.isArray(x) ? x : (x && [x]) || []).map(decodeURIComponent)
   );

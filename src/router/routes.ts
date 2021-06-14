@@ -1,5 +1,5 @@
 import {createRoute as createRouteOrigin, Route, RouteRender, Queryable} from 'utils/router/core';
-import {devRender, devDemoRouterRender} from './routeRenders';
+import * as routeRenders from './routeRenders';
 
 type AppRouteSettings = null;
 export type AppRoute<P extends Record<string, string>, Q extends unknown> = Route<
@@ -13,5 +13,6 @@ const createRoute = <P extends Record<string, string>, Q>(
   settings: AppRouteSettings = null
 ): AppRoute<P, Q> => createRouteOrigin(pattern, routeRender, settings);
 
-export const dev = createRoute('/dev', devRender);
-export const devDemoRouter = createRoute('/dev/demo-router/:tab', devDemoRouterRender);
+export const root = createRoute('/', routeRenders.rootRender);
+export const dev = createRoute('/dev', routeRenders.devRender);
+export const devDemoRouter = createRoute('/dev/demo-router/:tab', routeRenders.devDemoRouterRender);
