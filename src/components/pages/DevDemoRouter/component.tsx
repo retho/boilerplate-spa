@@ -12,11 +12,11 @@ export enum DevDemoRouterTab {
 }
 
 const bemRoot = bem(module.id, 'DevDemoRouter');
-type DevDemoRouterProps = {
+type Props = {
   tab: DevDemoRouterTab;
   query: QueryPayload;
 };
-const DevDemoRouter: FC<DevDemoRouterProps> = props => {
+const DevDemoRouter: FC<Props> = props => {
   const history = useHistory();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
