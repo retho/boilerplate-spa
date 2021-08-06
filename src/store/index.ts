@@ -2,7 +2,7 @@
 import {configureStore, Action, getDefaultMiddleware} from '@reduxjs/toolkit';
 import {reducer} from './root';
 import {ThunkAction} from 'redux-thunk';
-import {genRequest, Requester} from 'utils/request';
+import {genRequest, Requester} from 'src/utils/request';
 
 const thunkExtraArgument = {
   request: (null as unknown) as Requester,

@@ -1,6 +1,6 @@
 import {isEmpty, merge} from 'lodash-es';
 import {RequestParams} from './request';
-import {stringifyQuery} from 'utils/router';
+import {stringifyQuery} from 'src/utils/router';
 
 const configurationDefault: RequestInit = {
   headers: {

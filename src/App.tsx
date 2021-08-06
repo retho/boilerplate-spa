@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
 // eslint-disable-next-line no-restricted-imports
 import {Router as ReactRouter} from 'react-router-dom';
-import {history} from 'router/history';
-import Router from 'router';
+import Router from 'src/router';
 // eslint-disable-next-line no-restricted-imports
 import {Provider} from 'react-redux';
-import store from 'store';
-import ToastContainer from 'components/atoms/ToastContainer';
+import store from 'src/store';
+import ToastContainer from 'src/components/atoms/ToastContainer';
+import {history} from 'src/router/history';
 
 const Root: FC = () => (
   <React.StrictMode>

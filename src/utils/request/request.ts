@@ -1,8 +1,8 @@
 import {useMemo} from 'react';
-import {useStore} from 'utils/redux';
-import {AppStore} from 'store';
-import {logoutForce} from 'store/slices/auth';
-import {ADT, err, ok, Result} from 'utils/common';
+import {useStore} from 'src/utils/redux';
+import {AppStore} from 'src/store';
+import {logoutForce} from 'src/store/slices/auth';
+import {ADT, err, ok, Result} from 'src/utils/common';
 
 type ReplyErrorApi = {
   status: number;

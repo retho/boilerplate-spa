@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-restricted-imports
 import {useSelector as useSelectorOrigin} from 'react-redux';
-import {AppRootState} from 'store';
+import {AppRootState} from 'src/store';
 
 // eslint-disable-next-line no-restricted-imports
 export {useDispatch, useStore} from 'react-redux';

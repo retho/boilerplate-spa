@@ -1,4 +1,9 @@
-import {createRoute as createRouteOrigin, Route, RouteRender, Queryable} from 'utils/router/core';
+import {
+  createRoute as createRouteOrigin,
+  Route,
+  RouteRender,
+  Queryable,
+} from 'src/utils/router/core';
 import * as routeRenders from './routeRenders';
 
 type AppRouteSettings = null;

@@ -3,7 +3,7 @@ import './styles.scss';
 import {ReactComponent as IconSort} from './assets/iconSort.svg';
 import {ReactComponent as IconSortDown} from './assets/iconSortDown.svg';
 import {ReactComponent as IconSortUp} from './assets/iconSortUp.svg';
-import {bem} from 'utils/bem';
+import {bem} from 'src/utils/bem';
 
 export type DemoSort<F extends string> = {
   field: F;

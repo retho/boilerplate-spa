@@ -10,7 +10,7 @@ import {
   Redirect as RedirectOrigin,
   useLocation as useLocationOrigin,
 } from 'react-router-dom';
-import {Brand} from 'utils/common';
+import {Brand} from 'src/utils/common';
 
 const uribrand = Symbol('Uri');
 export type Uri = Brand<typeof uribrand, string>;

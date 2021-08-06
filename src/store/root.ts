@@ -1,4 +1,4 @@
-import {combineReducers} from 'utils/redux';
+import {combineReducers} from 'src/utils/redux';
 import {reducer as app} from './slices/app';
 import {reducer as auth} from './slices/auth';
 

@@ -1,8 +1,8 @@
 import React, {FC, Fragment} from 'react';
-import {routes} from 'router';
-import {bem} from 'utils/bem';
-import {nbsp} from 'utils/common';
-import {stringifyRoute, useHistory} from 'utils/router';
+import {routes} from 'src/router';
+import {bem} from 'src/utils/bem';
+import {nbsp} from 'src/utils/common';
+import {stringifyRoute, useHistory} from 'src/utils/router';
 import DemoSorter, {DemoSort} from './DemoSorter';
 import {QueryPayload} from './query';
 import './styles.scss';

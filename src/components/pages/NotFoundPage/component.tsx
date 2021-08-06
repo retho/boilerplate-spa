@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {bem} from 'utils/bem';
+import {bem} from 'src/utils/bem';
 import './styles.scss';
 
 const root = bem(module.id, 'NotFoundPage');

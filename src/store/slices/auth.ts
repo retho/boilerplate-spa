@@ -1,7 +1,7 @@
-import {createSliceName, createSlice, PayloadAction} from 'utils/redux';
-import {AppThunk} from 'store';
-import {loginReq} from 'api/auth';
-import {notifyError} from 'utils/toastify';
+import {createSliceName, createSlice, PayloadAction} from 'src/utils/redux';
+import {AppThunk} from 'src/store';
+import {loginReq} from 'src/api/auth';
+import {notifyError} from 'src/utils/toastify';
 
 const sliceName = createSliceName(module.id, 'auth');
 
