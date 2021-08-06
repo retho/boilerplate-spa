@@ -1,4 +1,5 @@
 const commonRules = require("./.eslintrc.common");
+const createEslintConfig = require("./.eslintrc.utils");
 
 const restrictedImportsRule = {
   'no-restricted-imports': ['error', {
@@ -58,36 +59,18 @@ const projectSpecificRules = {
   ...restrictedGlobalsRule,
 }
 
-module.exports = {
-  env: {
-    browser: true,
-    es2021: true
-  },
+module.exports = createEslintConfig({
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended'
   ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true
-    },
-    ecmaVersion: 2021,
-    sourceType: 'module',
-    project: './tsconfig.json',
-  },
   plugins: [
     '@typescript-eslint',
     'react',
     'react-hooks',
     'fp',
   ],
-  settings: {
-    react: {
-      version: 'detect' // * https://github.com/yannickcr/eslint-plugin-react#configuration
-    }
-  },
   rules: {
     ...commonRules,
     ...projectSpecificRules,
@@ -101,4 +84,4 @@ module.exports = {
       }
     }
   ]
-}
+})
