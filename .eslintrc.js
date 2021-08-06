@@ -21,9 +21,9 @@ const restrictedImportsRule = {
         message: 'Import from src/utils/redux instead',
       },
       {
-        name: 'utils/router',
+        name: 'src/utils/router',
         importNames: ['useLocation'],
-        message: `Url parsing must be handled within 'AppRoute' in src/src/router/routes`,
+        message: `Url parsing must be handled within 'AppRoute' in src/router/routes`,
       },
       {
         name: 'react-toastify',
