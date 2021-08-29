@@ -1,19 +1,19 @@
 import {useMemo} from 'react';
-import {useStore} from 'src/utils/redux';
 import {AppStore} from 'src/store';
 import {logoutForce} from 'src/store/slices/auth';
 import {ADT, err, ok, Result} from 'src/utils/common';
+import {useStore} from 'src/utils/redux';
 
 type ReplyErrorApi = {
   status: number;
   headers: Headers;
-  data: unknown;
+  body: unknown;
 };
 type ReplyError = ADT<'api', ReplyErrorApi> | ADT<'unauthorized'> | ADT<'unknown', {err: unknown}>;
 type ReplyPayload<D> = {
   status: number;
   headers: Headers;
-  data: D;
+  body: D;
 };
 type Reply<D> = Result<ReplyError, ReplyPayload<D>>;
 
@@ -41,18 +41,18 @@ export const genRequest = (store: AppStore): Requester => <D>(
       .then(
         async (res): Promise<Reply<D>> => {
           if (res.ok) {
-            const data = await res2data(res);
+            const body = await res2data(res);
             return ok({
               status: res.status,
               headers: res.headers,
-              data,
+              body,
             });
           }
           if (res.status === 401) {
             store.dispatch(logoutForce());
             return err({kind: 'unauthorized'});
           }
-          const data = await res
+          const body = await res
             .clone()
             .json()
             // eslint-disable-next-line no-restricted-syntax
@@ -61,7 +61,7 @@ export const genRequest = (store: AppStore): Requester => <D>(
             kind: 'api',
             status: res.status,
             headers: res.headers,
-            data,
+            body,
           });
         }
       )
