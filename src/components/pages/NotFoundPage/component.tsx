@@ -1,6 +1,7 @@
-import React, {FC} from 'react';
-import {bem} from 'src/utils/bem';
 import './styles.scss';
+
+import React, {FC} from 'react';
+import {bem} from 'src/core/bem';
 
 const root = bem(module.id, 'NotFoundPage');
 const NotFoundPage: FC = () => {

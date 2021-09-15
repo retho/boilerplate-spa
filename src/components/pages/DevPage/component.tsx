@@ -1,7 +1,8 @@
-import React, {FC} from 'react';
-import {routes} from 'src/router';
-import {bem} from 'src/utils/bem';
 import './styles.scss';
+
+import React, {FC} from 'react';
+import {bem} from 'src/core/bem';
+import {routes} from 'src/router';
 
 const root = bem(module.id, 'DevPage');
 const DevPage: FC = () => {

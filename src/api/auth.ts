@@ -1,4 +1,5 @@
-import {reqJson, RequestParams} from 'src/utils/request';
+import {reqJson, RequestParams} from 'src/core/request';
+
 import {LoginReply} from './auth.reply';
 
 export const loginReq = (username: string): RequestParams<LoginReply> =>

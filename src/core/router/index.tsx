@@ -1,16 +1,17 @@
+import {isEmpty, mapValues} from 'lodash-es';
+import {parse as qsParse, stringify as qsStringifyQuery} from 'query-string';
 import React, {FC, useMemo} from 'react';
-import {Route, Query} from './core';
-import UrlPattern from 'url-pattern';
-import {stringify as qsStringifyQuery, parse as qsParse} from 'query-string';
-import {mapValues, isEmpty} from 'lodash-es';
 // eslint-disable-next-line no-restricted-imports
 import {
   matchPath,
-  useHistory as useHistoryOrigin,
   Redirect as RedirectOrigin,
+  useHistory as useHistoryOrigin,
   useLocation as useLocationOrigin,
 } from 'react-router-dom';
-import {Brand} from 'src/utils/common';
+import {Brand} from 'src/core/utils';
+import UrlPattern from 'url-pattern';
+
+import {Query, Route} from './core';
 
 const uribrand = Symbol('Uri');
 export type Uri = Brand<typeof uribrand, string>;

@@ -1,4 +1,4 @@
-import {genBemFormatter, BemFormatter} from './core';
+import {BemFormatter, genBemFormatter} from './core';
 
 type Initializer = (moduleId: ModuleId, blockName: string) => BemFormatter;
 

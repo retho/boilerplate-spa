@@ -1,6 +1,6 @@
-import {createSliceName, createSlice, PayloadAction} from 'src/utils/redux';
-import {AppThunk} from 'src/store';
 import {loginReq} from 'src/api/auth';
+import {createSlice, createSliceName, PayloadAction} from 'src/core/redux';
+import {AppThunk} from 'src/store';
 import {notifyError} from 'src/utils/toastify';
 
 const sliceName = createSliceName(module.id, 'auth');
@@ -30,8 +30,8 @@ const {setToken} = slice.actions;
 export const login = (username: string): AppThunk => async (dispatch, getState, {request}) => {
   const reply = await request(loginReq(username));
   if (reply.kind === 'ok') {
-    localStorage.setItem('token', reply.payload.data.token);
-    dispatch(setToken(reply.payload.data.token));
+    localStorage.setItem('token', reply.payload.body.token);
+    dispatch(setToken(reply.payload.body.token));
   } else if (reply.error.kind !== 'unauthorized') {
     notifyError('Something went wrong');
   }

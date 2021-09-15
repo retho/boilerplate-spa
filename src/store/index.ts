@@ -1,8 +1,9 @@
 // eslint-disable-next-line no-restricted-imports
-import {configureStore, Action, getDefaultMiddleware} from '@reduxjs/toolkit';
-import {reducer} from './root';
+import {Action, configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 import {ThunkAction} from 'redux-thunk';
-import {genRequest, Requester} from 'src/utils/request';
+import {genRequest, Requester} from 'src/core/request';
+
+import {reducer} from './root';
 
 const thunkExtraArgument = {
   request: (null as unknown) as Requester,

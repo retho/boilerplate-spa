@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
-// eslint-disable-next-line no-restricted-imports
-import {matchRoute, parseQuery, useLocation} from 'src/utils/router';
 import NotFoundPage from 'src/components/pages/NotFoundPage';
+// eslint-disable-next-line no-restricted-imports
+import {matchRoute, parseQuery, useLocation} from 'src/core/router';
+import {Query} from 'src/core/router/core';
+
 import * as routes from './routes';
 import {AppRoute} from './routes';
-import {Query} from 'src/utils/router/core';
 
 const findCurrentRoute = (pathname: string, query: Query) => {
   for (const r of Object.values(routes)) {

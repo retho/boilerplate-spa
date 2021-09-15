@@ -1,9 +1,10 @@
 import {
   createRoute as createRouteOrigin,
+  Queryable,
   Route,
   RouteRender,
-  Queryable,
-} from 'src/utils/router/core';
+} from 'src/core/router/core';
+
 import * as routeRenders from './routeRenders';
 
 type AppRouteSettings = null;

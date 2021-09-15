@@ -1,11 +1,13 @@
+import './styles.scss';
+
 import React, {FC, Fragment} from 'react';
+import {bem} from 'src/core/bem';
+import {stringifyRoute, useHistory} from 'src/core/router';
+import {nbsp} from 'src/core/utils';
 import {routes} from 'src/router';
-import {bem} from 'src/utils/bem';
-import {nbsp} from 'src/utils/common';
-import {stringifyRoute, useHistory} from 'src/utils/router';
+
 import DemoSorter, {DemoSort} from './DemoSorter';
 import {QueryPayload} from './query';
-import './styles.scss';
 
 export enum DevDemoRouterTab {
   tab1 = 'tab1',

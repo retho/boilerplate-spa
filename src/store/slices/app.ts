@@ -1,4 +1,4 @@
-import {createSliceName, createSlice} from 'src/utils/redux';
+import {createSlice, createSliceName} from 'src/core/redux';
 
 const sliceName = createSliceName(module.id, 'app');
 

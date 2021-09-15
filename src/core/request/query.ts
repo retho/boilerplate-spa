@@ -1,33 +1,15 @@
 import {isEmpty, merge} from 'lodash-es';
+import {stringifyQuery} from 'src/core/router';
+
 import {RequestParams} from './request';
-import {stringifyQuery} from 'src/utils/router';
 
 const configurationDefault: RequestInit = {
   headers: {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     'Content-Type': 'application/json;charset=UTF-8',
   },
 };
 
-type Method =
-  | 'get'
-  | 'GET'
-  | 'delete'
-  | 'DELETE'
-  | 'head'
-  | 'HEAD'
-  | 'options'
-  | 'OPTIONS'
-  | 'post'
-  | 'POST'
-  | 'put'
-  | 'PUT'
-  | 'patch'
-  | 'PATCH'
-  | 'link'
-  | 'LINK'
-  | 'unlink'
-  | 'UNLINK';
+type Method = 'get' | 'delete' | 'head' | 'options' | 'post' | 'put' | 'patch' | 'link' | 'unlink';
 
 export type ReqOptions = {
   method?: Method;

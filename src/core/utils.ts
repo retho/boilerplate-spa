@@ -6,10 +6,13 @@ export const stopPropagation = (e: SyntheticEvent): void => e.stopPropagation();
 
 export const useForceRender = (): (() => void) => useReducer(s => s + 1, 0)[1];
 
-export const timeout = (ms: number): Promise<void> => new Promise(rsv => setTimeout(rsv, ms));
+export const sleep = (ms: number): Promise<void> => new Promise(rsv => setTimeout(rsv, ms));
 
 export const nbsp = '\xa0';
 export const dash = '—';
+
+// eslint-disable-next-line
+export {nanoid} from '@reduxjs/toolkit';
 
 // * https://spin.atomicobject.com/2018/01/15/typescript-flexible-nominal-typing/
 const brand = Symbol('brand');

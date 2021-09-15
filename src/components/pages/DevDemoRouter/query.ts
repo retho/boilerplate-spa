@@ -1,5 +1,6 @@
-import {compact} from 'lodash';
-import {Query, Queryable} from 'src/utils/router/core';
+import {compact} from 'lodash-es';
+import {Query, Queryable} from 'src/core/router/core';
+
 import {DemoSort} from './DemoSorter';
 
 type Filters = {

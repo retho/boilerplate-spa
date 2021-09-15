@@ -1,9 +1,11 @@
-import React, {ReactElement} from 'react';
 import './styles.scss';
+
+import React, {ReactElement} from 'react';
+import {bem} from 'src/core/bem';
+
 import {ReactComponent as IconSort} from './assets/iconSort.svg';
 import {ReactComponent as IconSortDown} from './assets/iconSortDown.svg';
 import {ReactComponent as IconSortUp} from './assets/iconSortUp.svg';
-import {bem} from 'src/utils/bem';
 
 export type DemoSort<F extends string> = {
   field: F;
