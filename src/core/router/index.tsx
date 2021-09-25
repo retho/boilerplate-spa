@@ -16,7 +16,7 @@ import {Query, Route} from './core';
 const uribrand = Symbol('Uri');
 export type Uri = Brand<typeof uribrand, string>;
 
-export const Redirect: FC<{to: Uri}> = props => <RedirectOrigin to={props.to} />;
+export const Redirect: FC<{to: Uri}> = ({to}) => <RedirectOrigin to={to} />;
 
 const array_format = 'bracket' as const;
 

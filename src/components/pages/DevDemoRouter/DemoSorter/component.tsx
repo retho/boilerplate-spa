@@ -20,27 +20,29 @@ type Props<F extends string> = {
   onChange: (val: null | DemoSort<F>) => void;
   defaultDesc?: boolean;
 };
-const DemoSorter = <F extends string>(props: Props<F>): ReactElement => {
+const DemoSorter = <F extends string>({
+  title,
+  field,
+  value,
+  onChange,
+  defaultDesc = true,
+}: Props<F>): ReactElement => {
   const renderIcon = () => {
-    if (props.value?.field !== props.field) return <IconSort className={bemRoot('icon')} />;
-    if (props.value.desc) return <IconSortDown className={bemRoot('icon')} />;
+    if (value?.field !== field) return <IconSort className={bemRoot('icon')} />;
+    if (value.desc) return <IconSortDown className={bemRoot('icon')} />;
     return <IconSortUp className={bemRoot('icon')} />;
   };
 
-  const defaultDesc = props.defaultDesc || true;
-
   const handleClick = () => {
-    if (props.field !== props.value?.field)
-      return props.onChange({field: props.field, desc: defaultDesc});
-    if (props.value.desc === defaultDesc)
-      return props.onChange({field: props.field, desc: !props.value.desc});
-    return props.onChange(null);
+    if (field !== value?.field) return onChange({field: field, desc: defaultDesc});
+    if (value.desc === defaultDesc) return onChange({field: field, desc: !value.desc});
+    return onChange(null);
   };
 
   return (
     <div className={bemRoot()} onClick={handleClick}>
       <div className={bemRoot('icon-wrapper')}>{renderIcon()}</div>
-      <div className={bemRoot('title')}>{props.title}</div>
+      <div className={bemRoot('title')}>{title}</div>
     </div>
   );
 };

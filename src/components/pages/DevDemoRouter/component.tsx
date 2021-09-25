@@ -20,16 +20,16 @@ type Props = {
   tab: DevDemoRouterTab;
   query: QueryPayload;
 };
-const DevDemoRouter: FC<Props> = props => {
+const DevDemoRouter: FC<Props> = ({tab, query}) => {
   const history = useHistory();
 
-  const handleTabChange = (tab: DevDemoRouterTab) =>
+  const handleTabChange = (newTab: DevDemoRouterTab) =>
     history.push(
       stringifyRoute(
         routes.devDemoRouter,
-        {tab},
+        {tab: newTab},
         {
-          ...props.query,
+          ...query,
         }
       )
     );
@@ -38,11 +38,11 @@ const DevDemoRouter: FC<Props> = props => {
     history.replace(
       stringifyRoute(
         routes.devDemoRouter,
-        {tab: props.tab},
+        {tab},
         {
-          ...props.query,
+          ...query,
           filters: {
-            ...props.query.filters,
+            ...query.filters,
             search: e.target.value,
           },
         }
@@ -53,9 +53,9 @@ const DevDemoRouter: FC<Props> = props => {
     history.replace(
       stringifyRoute(
         routes.devDemoRouter,
-        {tab: props.tab},
+        {tab},
         {
-          ...props.query,
+          ...query,
           sort,
         }
       )
@@ -67,25 +67,25 @@ const DevDemoRouter: FC<Props> = props => {
       <div>
         <div>
           {Object.values(DevDemoRouterTab).map(t => (
-            <button key={t} onClick={() => handleTabChange(t)} disabled={t === props.tab}>
+            <button key={t} onClick={() => handleTabChange(t)} disabled={t === tab}>
               {t}
             </button>
           ))}
         </div>
         <label>search</label>
-        <input value={props.query.filters.search} onChange={handleSearchChange} />
+        <input value={query.filters.search} onChange={handleSearchChange} />
         <br />
         <a>#tag1</a>
         <a>#tag2</a>
         <a>#tag3</a>
         <br />
-        <DemoSorter title="a" field="a" value={props.query.sort} onChange={handleSortChange} />
-        <DemoSorter title="b" field="b" value={props.query.sort} onChange={handleSortChange} />
+        <DemoSorter title="a" field="a" value={query.sort} onChange={handleSortChange} />
+        <DemoSorter title="b" field="b" value={query.sort} onChange={handleSortChange} />
       </div>
       <div>
-        activeTab={props.tab}
+        activeTab={tab}
         <br />
-        {JSON.stringify(props.query, null, 4)
+        {JSON.stringify(query, null, 4)
           .replaceAll(' ', nbsp)
           .split('\n')
           .map((x, ix) => (

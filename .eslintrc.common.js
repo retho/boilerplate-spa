@@ -93,7 +93,7 @@ const commonRules = {
   'eqeqeq': ['error', 'always', {null: 'ignore'}],
   '@typescript-eslint/array-type': ['warn', {default: 'array', readonly: 'array'}],
   '@typescript-eslint/no-empty-function': 'off',
-  'react/destructuring-assignment': ['error', 'never'],
+  'react/destructuring-assignment': ['error', 'always'],
   'no-param-reassign': ['error', {props: true}],
   'fp/no-mutating-methods': ['error', {allowedObjects: ['history']}],
   'fp/no-class': 'error',
