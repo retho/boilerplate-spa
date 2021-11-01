@@ -10,7 +10,7 @@ const DevPage: FC = () => {
     <div className={root()}>
       <ul>
         {Object.values(routes)
-          .filter(x => x.pattern.startsWith('/dev') && x.pattern !== routes.dev.pattern)
+          .filter(x => x.pattern.startsWith('/demo') && x.pattern !== routes.demo.pattern)
           .map(r => (
             <li key={r.pattern}>
               <a href={r.pattern}>{r.pattern}</a>

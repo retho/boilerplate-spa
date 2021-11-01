@@ -49,7 +49,7 @@ const query2payload = (query: Query): QueryPayload => {
   };
 };
 
-export const devDemoPageQueryableInstance: Queryable<QueryPayload> = {
+export const demoRouterPageQueryableInstance: Queryable<QueryPayload> = {
   fromQuery: query2payload,
   toQuery: payload2query,
 };

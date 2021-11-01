@@ -9,7 +9,7 @@ import {routes} from 'src/router';
 import DemoSorter, {DemoSort} from './DemoSorter';
 import {QueryPayload} from './query';
 
-export enum DevDemoRouterTab {
+export enum DemoRouterPageTab {
   tab1 = 'tab1',
   tab2 = 'tab2',
   tab3 = 'tab3',
@@ -17,13 +17,13 @@ export enum DevDemoRouterTab {
 
 const bemRoot = bem(module.id, 'DevDemoRouter');
 type Props = {
-  tab: DevDemoRouterTab;
+  tab: DemoRouterPageTab;
   query: QueryPayload;
 };
 const DevDemoRouter: FC<Props> = ({tab, query}) => {
   const history = useHistory();
 
-  const handleTabChange = (newTab: DevDemoRouterTab) =>
+  const handleTabChange = (newTab: DemoRouterPageTab) =>
     history.push(
       stringifyRoute(
         routes.devDemoRouter,
@@ -66,7 +66,7 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
     <div className={bemRoot()}>
       <div>
         <div>
-          {Object.values(DevDemoRouterTab).map(t => (
+          {Object.values(DemoRouterPageTab).map(t => (
             <button key={t} onClick={() => handleTabChange(t)} disabled={t === tab}>
               {t}
             </button>

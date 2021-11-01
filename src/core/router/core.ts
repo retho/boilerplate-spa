@@ -11,9 +11,9 @@ export const emptyQueryableInstance: Queryable<null> = {
 
 export type Route<S extends unknown, P extends Record<string, string>, Q> = {
   pattern: string;
+  settings: S;
   queryableInstance: Queryable<Q>;
   render: RouteRender<P, Q>;
-  settings: S;
 };
 
 export type RouteRender<P extends Record<string, string>, Q> = (
@@ -21,19 +21,6 @@ export type RouteRender<P extends Record<string, string>, Q> = (
   queryPayload: Q
 ) => JSX.Element;
 
-export const createRouteRender = <Q>(queryableInstance: Queryable<Q>) => <
-  P extends Record<string, string> = Record<never, string>
->(
-  render: RouteRender<P, Q>
-): [Queryable<Q>, RouteRender<P, Q>] => [queryableInstance, render];
-
 export const createRoute = <S, P extends Record<string, string>, Q>(
-  pattern: string,
-  [queryableInstance, render]: [Queryable<Q>, RouteRender<P, Q>],
-  settings: S
-): Route<S, P, Q> => ({
-  pattern,
-  queryableInstance: (queryableInstance as unknown) as Queryable<Q>,
-  render,
-  settings,
-});
+  route: Route<S, P, Q>
+): Route<S, P, Q> => route;
