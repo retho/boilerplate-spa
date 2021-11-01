@@ -1,7 +1,7 @@
 import React from 'react';
-import DevDemoRouter, {DevDemoRouterTab} from 'src/components/pages/DevDemoRouter';
-import {devDemoPageQueryableInstance} from 'src/components/pages/DevDemoRouter/query';
-import DevPage from 'src/components/pages/DevPage';
+import DevPage from 'src/components/pages/DemoPage';
+import DevDemoRouter, {DevDemoRouterTab} from 'src/components/pages/DemoRouter';
+import {devDemoPageQueryableInstance} from 'src/components/pages/DemoRouter/query';
 import {Redirect, stringifyRoute} from 'src/core/router';
 import {createRouteRender, emptyQueryableInstance} from 'src/core/router/core';
 import {routes} from 'src/router';
