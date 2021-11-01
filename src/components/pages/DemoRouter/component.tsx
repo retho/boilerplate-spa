@@ -10,9 +10,9 @@ import DemoSorter, {DemoSort} from './DemoSorter';
 import {QueryPayload} from './query';
 
 export enum DemoRouterPageTab {
-  tab1 = 'tab1',
-  tab2 = 'tab2',
-  tab3 = 'tab3',
+  tab1 = 'first-tab',
+  tab2 = 'second-tab',
+  tab3 = 'third-tab',
 }
 
 const bemRoot = bem(module.id, 'DevDemoRouter');
@@ -64,7 +64,7 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
 
   return (
     <div className={bemRoot()}>
-      <div>
+      <div className={bemRoot('controls')}>
         <div>
           {Object.values(DemoRouterPageTab).map(t => (
             <button key={t} onClick={() => handleTabChange(t)} disabled={t === tab}>
@@ -82,7 +82,7 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
         <DemoSorter title="a" field="a" value={query.sort} onChange={handleSortChange} />
         <DemoSorter title="b" field="b" value={query.sort} onChange={handleSortChange} />
       </div>
-      <div>
+      <div className={bemRoot('preview')}>
         activeTab={tab}
         <br />
         {JSON.stringify(query, null, 4)
