@@ -1,0 +1,9 @@
+
+.DemoTag {
+  cursor: pointer;
+  color: blue;
+
+  &--active {
+    border: 2px solid blue;
+  }
+}

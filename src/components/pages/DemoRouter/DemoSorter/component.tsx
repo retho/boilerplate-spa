@@ -11,8 +11,8 @@ export type DemoSort<F extends string> = {
   field: F;
   desc: boolean;
 };
-const bemRoot = bem(module.id, 'DemoSorter');
 
+const bemRoot = bem(module.id, 'DemoSorter');
 type Props<F extends string> = {
   title: string;
   field: F;

@@ -1,5 +1,5 @@
 
-.DevDemoRouter {
+.DemoRouter {
   height: 100vh;
   padding: 0 20%;
   display: flex;
@@ -14,5 +14,11 @@
 
   &__preview {
     flex: 1 1 auto;
+  }
+
+  &__tags {
+    * + * {
+      margin-left: 10px;
+    }
   }
 }

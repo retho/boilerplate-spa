@@ -9,10 +9,10 @@ type Filters = {
   tags: string[];
 };
 
-type ValueSortColumns = 'a' | 'b';
+type SampleSortColumns = 'a' | 'b';
 export type QueryPayload = {
   filters: Filters;
-  sort: null | DemoSort<ValueSortColumns>;
+  sort: null | DemoSort<SampleSortColumns>;
 };
 
 const filters2query = (filters: Filters): Query => {
@@ -28,18 +28,18 @@ const query2filters = (query: Query): Filters => {
   };
 };
 
-const valueSortPrefix = 'value';
+const sampleSortPrefix = 'samplePrefix';
 const payload2query = (payload: QueryPayload): Query => {
   const {filters, sort} = payload;
   return {
     ...filters2query(filters),
-    ...queryableIstanceDemoSort(valueSortPrefix).toQuery(sort),
+    ...queryableIstanceDemoSort(sampleSortPrefix).toQuery(sort),
   };
 };
 const query2payload = (query: Query): QueryPayload => {
   return {
     filters: query2filters(query),
-    sort: queryableIstanceDemoSort<ValueSortColumns>(valueSortPrefix).fromQuery(query),
+    sort: queryableIstanceDemoSort<SampleSortColumns>(sampleSortPrefix).fromQuery(query),
   };
 };
 

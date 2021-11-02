@@ -1,12 +1,14 @@
 import './styles.scss';
 
 import React, {FC, Fragment} from 'react';
+import {useLocation} from 'react-router';
 import {bem} from 'src/core/bem';
 import {stringifyRoute, useHistory} from 'src/core/router';
 import {nbsp} from 'src/core/utils';
 import {routes} from 'src/router';
 
 import DemoSorter, {DemoSort} from './DemoSorter';
+import DemoTag from './DemoTag';
 import {QueryPayload} from './query';
 
 export enum DemoRouterPageTab {
@@ -15,12 +17,15 @@ export enum DemoRouterPageTab {
   tab3 = 'third-tab',
 }
 
-const bemRoot = bem(module.id, 'DevDemoRouter');
+const tags = ['tag1', 'tag2', 'tag3'];
+
+const bemRoot = bem(module.id, 'DemoRouter');
 type Props = {
   tab: DemoRouterPageTab;
   query: QueryPayload;
 };
 const DevDemoRouter: FC<Props> = ({tab, query}) => {
+  const location = useLocation();
   const history = useHistory();
 
   const handleTabChange = (newTab: DemoRouterPageTab) =>
@@ -62,6 +67,22 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
     );
   };
 
+  const handleToggleTag = (tag: string) => (active: boolean) => {
+    history.replace(
+      stringifyRoute(
+        routes.devDemoRouter,
+        {tab},
+        {
+          ...query,
+          filters: {
+            ...query.filters,
+            tags: active ? [...query.filters.tags, tag] : query.filters.tags.filter(t => t !== tag),
+          },
+        }
+      )
+    );
+  };
+
   return (
     <div className={bemRoot()}>
       <div className={bemRoot('controls')}>
@@ -72,17 +93,29 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
             </button>
           ))}
         </div>
-        <label>search</label>
+        <br />
+        <label>search {nbsp}</label>
         <input value={query.filters.search} onChange={handleSearchChange} />
         <br />
-        <a>#tag1</a>
-        <a>#tag2</a>
-        <a>#tag3</a>
+        <br />
+        <div className={bemRoot('tags')}>
+          {tags.map(t => (
+            <DemoTag
+              key={t}
+              name={t}
+              active={query.filters.tags.includes(t)}
+              onChange={handleToggleTag(t)}
+            />
+          ))}
+        </div>
         <br />
         <DemoSorter title="a" field="a" value={query.sort} onChange={handleSortChange} />
         <DemoSorter title="b" field="b" value={query.sort} onChange={handleSortChange} />
       </div>
       <div className={bemRoot('preview')}>
+        {decodeURIComponent(location.search)}
+        <br />
+        <br />
         activeTab={tab}
         <br />
         {JSON.stringify(query, null, 4)
