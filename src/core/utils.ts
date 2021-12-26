@@ -1,8 +1,9 @@
-import {SyntheticEvent, useReducer} from 'react';
+import {useReducer} from 'react';
 
-export const assertNever = (val: never): never => val;
-
-export const stopPropagation = (e: SyntheticEvent): void => e.stopPropagation();
+export const assertNever = (val: never): never => {
+  throw new Error(`Unexpected never value: ${JSON.stringify(val)}`);
+};
+export const assertNeverWithoutPanic = (val: never): void => val;
 
 export const useForceRender = (): (() => void) => useReducer(s => s + 1, 0)[1];
 
@@ -15,8 +16,8 @@ export const dash = '—';
 export {nanoid} from '@reduxjs/toolkit';
 
 // * https://spin.atomicobject.com/2018/01/15/typescript-flexible-nominal-typing/
-const brand = Symbol('brand');
-const flavor = Symbol('flavor');
+declare const brand: unique symbol;
+declare const flavor: unique symbol;
 export type Brand<U extends symbol, T> = {[brand]: U} & T;
 export type Flavor<U extends symbol, T> = {[flavor]?: U} & T;
 
