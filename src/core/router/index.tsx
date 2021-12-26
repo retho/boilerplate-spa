@@ -13,10 +13,10 @@ import UrlPattern from 'url-pattern';
 
 import {Query, Route} from './core';
 
-const uribrand = Symbol('Uri');
-export type Uri = Brand<typeof uribrand, string>;
+declare const apphrefbrand: unique symbol;
+export type AppHref = Brand<typeof apphrefbrand, string>;
 
-export const Redirect: FC<{to: Uri}> = ({to}) => <RedirectOrigin to={to} />;
+export const Redirect: FC<{to: AppHref}> = ({to}) => <RedirectOrigin to={to} />;
 
 const array_format = 'bracket' as const;
 
@@ -25,7 +25,7 @@ export const stringifyRoute = <P extends Record<string, string>, Q extends unkno
   route: Route<unknown, P, Q>,
   params: P,
   queryPayload: Q
-): Uri => {
+): AppHref => {
   const pattern = new UrlPattern(route.pattern);
   const query = route.queryableInstance.toQuery(queryPayload);
   return (pattern.stringify(params && mapValues(params, encodeURIComponent)) +
@@ -34,7 +34,7 @@ export const stringifyRoute = <P extends Record<string, string>, Q extends unkno
       : `?${stringifyQuery(
           mapValues(query, x => (x && x.length === 1 ? x[0] || undefined : x)),
           {arrayFormat: array_format}
-        )}`)) as Uri;
+        )}`)) as AppHref;
 };
 
 export const matchRoute = <P extends Record<string, string>, Q>(
@@ -73,15 +73,15 @@ export const parseQuery = (search: string): Query => {
 };
 
 type History = {
-  push: (path: Uri) => void;
-  replace: (path: Uri) => void;
+  push: (path: AppHref) => void;
+  replace: (path: AppHref) => void;
 };
 export const useHistory = (): History => {
   const history = useHistoryOrigin();
   return useMemo(() => {
     return {
-      push: (path: Uri) => history.push(encodeURI(path)),
-      replace: (path: Uri) => history.replace(encodeURI(path)),
+      push: (path: AppHref) => history.push(encodeURI(path)),
+      replace: (path: AppHref) => history.replace(encodeURI(path)),
     };
   }, []);
 };
