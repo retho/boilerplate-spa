@@ -1,36 +1,17 @@
 import React, {FC} from 'react';
 import NotFoundPage from 'src/components/pages/NotFoundPage';
-// eslint-disable-next-line no-restricted-imports
-import {matchRoute, parseQuery, useLocation} from 'src/core/router_old';
-import {Query} from 'src/core/router_old/core';
+import {useRoutes} from 'src/core/router';
 
 import * as routes from './routes';
 import {AppRoute} from './routes';
 
-const findCurrentRoute = (pathname: string, query: Query) => {
-  for (const r of Object.values(routes)) {
-    const route = r as AppRoute<Record<string, string>, unknown>;
-    const matched = matchRoute(route, pathname, query);
-    if (matched) {
-      const [params, queryPayload] = matched;
-      return route.render(params, queryPayload);
-    }
-  }
-  return null;
-};
-
-const useCurrentRoute = () => {
-  const location = useLocation();
-
-  const query = parseQuery(location.search);
-  const currentRoute = findCurrentRoute(location.pathname, query);
-
-  return currentRoute || <NotFoundPage />;
-};
+const allRoutes = Object.values(routes) as AppRoute<Record<string, string>, unknown>[];
 
 const Router: FC = () => {
-  const jsx = useCurrentRoute();
-  return jsx;
+  const currentRoute = useRoutes(allRoutes);
+  if (!currentRoute) return <NotFoundPage />;
+  const {route, params, query} = currentRoute;
+  return route.render(params, query);
 };
 
 export default Router;

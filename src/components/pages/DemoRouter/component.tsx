@@ -1,9 +1,8 @@
 import './styles.scss';
 
 import React, {FC, Fragment} from 'react';
-import {useLocation} from 'react-router';
 import {bem} from 'src/core/bem';
-import {stringifyRoute, useHistory} from 'src/core/router_old';
+import {stringifyRoute, useHistory, useLocation} from 'src/core/router';
 import {nbsp} from 'src/core/utils';
 import {routes} from 'src/router';
 

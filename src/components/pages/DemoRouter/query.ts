@@ -1,5 +1,5 @@
 import {compact} from 'lodash-es';
-import {Query, Queryable} from 'src/core/router_old/core';
+import {Queryable, RawQuery} from 'src/core/router';
 
 import {DemoSort} from './DemoSorter';
 import {queryableIstanceDemoSort} from './utils';
@@ -15,13 +15,13 @@ export type QueryPayload = {
   sort: null | DemoSort<SampleSortColumns>;
 };
 
-const filters2query = (filters: Filters): Query => {
+const filters2query = (filters: Filters): RawQuery => {
   return {
     search: [filters.search],
     tags: filters.tags,
   };
 };
-const query2filters = (query: Query): Filters => {
+const query2filters = (query: RawQuery): Filters => {
   return {
     search: query.search[0] || '',
     tags: compact(query.tags),
@@ -29,14 +29,14 @@ const query2filters = (query: Query): Filters => {
 };
 
 const sampleSortPrefix = 'samplePrefix';
-const payload2query = (payload: QueryPayload): Query => {
+const payload2query = (payload: QueryPayload): RawQuery => {
   const {filters, sort} = payload;
   return {
     ...filters2query(filters),
     ...queryableIstanceDemoSort(sampleSortPrefix).toQuery(sort),
   };
 };
-const query2payload = (query: Query): QueryPayload => {
+const query2payload = (query: RawQuery): QueryPayload => {
   return {
     filters: query2filters(query),
     sort: queryableIstanceDemoSort<SampleSortColumns>(sampleSortPrefix).fromQuery(query),

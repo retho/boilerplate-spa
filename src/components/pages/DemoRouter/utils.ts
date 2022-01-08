@@ -1,4 +1,4 @@
-import {Queryable} from 'src/core/router_old/core';
+import {Queryable} from 'src/core/router';
 
 import {DemoSort} from './DemoSorter';
 

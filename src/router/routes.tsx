@@ -1,38 +1,27 @@
 import React from 'react';
-import {Redirect} from 'react-router';
 import DemoPage from 'src/components/pages/DemoPage';
 import DemoRouter, {DemoRouterPageTab} from 'src/components/pages/DemoRouter';
 import {demoRouterPageQueryableInstance} from 'src/components/pages/DemoRouter/query';
-import {stringifyRoute} from 'src/core/router_old';
-import {
-  createRoute as createRouteCore,
-  emptyQueryableInstance,
-  Queryable,
-  Route,
-  RouteRender,
-} from 'src/core/router_old/core';
+import {stringifyRoute} from 'src/core/router';
+import {emptyQueryableInstance, Queryable, Redirect, Route} from 'src/core/router';
 
-type AppRouteSettings = null;
-export type AppRoute<P extends Record<string, string>, Q extends unknown> = Route<
-  AppRouteSettings,
-  P,
-  Q
->;
-const createRoute = <Q extends unknown>(queryableInstance: Queryable<Q>) => <
-  P extends Record<string, string>
->(route: {
-  pattern: string;
-  render: RouteRender<P, Q>;
-}): AppRoute<P, Q> => createRouteCore({...route, queryableInstance, settings: null});
+export type AppRoute<Params extends Record<string, string>, Query> = Route<Params, Query> & {
+  render: (params: Params, query: Query) => JSX.Element;
+};
+const createRoute = <Query extends unknown>(queryableInstance: Queryable<Query>) => <
+  Params extends Record<string, string>
+>(
+  route: Omit<AppRoute<Params, Query>, 'queryableInstance'>
+): AppRoute<Params, Query> => ({...route, queryableInstance});
 
-// =====
+// =
 export const demo = createRoute(emptyQueryableInstance)({
   pattern: '/demo',
   render: () => <DemoPage />,
 });
 export const root = createRoute(emptyQueryableInstance)({
   pattern: '/',
-  render: () => <Redirect to={stringifyRoute(demo, {}, null)} />,
+  render: () => <Redirect to={stringifyRoute(demo, {}, {})} />,
 });
 
 export const devDemoRouter = createRoute(demoRouterPageQueryableInstance)<{

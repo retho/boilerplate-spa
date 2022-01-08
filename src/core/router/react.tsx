@@ -2,7 +2,7 @@ import {History, Location} from 'history';
 import React, {FC, useContext, useLayoutEffect, useMemo} from 'react';
 
 import {panic, useForceRender} from '../utils';
-import {Href} from './core';
+import {Href, matchRoute, Route} from './core';
 
 type RouterContext = {
   history: History;
@@ -49,4 +49,22 @@ export const useLocation = (): Location => {
     return unlisten();
   }, []);
   return history.location;
+};
+
+export const useRoutes = <R extends Route<Record<string, string>, unknown>>(
+  routes: R[]
+): null | {route: R; params: Record<string, string>; query: unknown} => {
+  const location = useLocation();
+
+  return useMemo(() => {
+    for (const r of routes) {
+      const route = r;
+      const matched = matchRoute(route, location.pathname, location.search);
+      if (matched) {
+        const {params, query} = matched;
+        return {route, params, query};
+      }
+    }
+    return null;
+  }, [routes, location.pathname, location.search]);
 };

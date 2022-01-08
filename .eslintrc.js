@@ -5,29 +5,16 @@ const restrictedImportsRule = {
   'no-restricted-imports': ['error', {
     paths: [
       {
-        name: 'react-router-dom',
-        message: 'Import from src/utils/router instead',
-      },
-      {
         name: 'redux',
-        message: 'Import from src/utils/redux instead',
+        message: 'Import from src/core/redux instead',
       },
       {
         name: 'react-redux',
-        message: 'Import from src/utils/redux instead',
+        message: 'Import from src/core/redux instead',
       },
       {
         name: '@reduxjs/toolkit',
-        message: 'Import from src/utils/redux instead',
-      },
-      {
-        name: 'src/utils/router',
-        importNames: ['useLocation'],
-        message: `Url parsing must be handled within 'AppRoute' in src/router/routes`,
-      },
-      {
-        name: 'react-toastify',
-        message: 'Import from src/utils/toastify instead',
+        message: 'Import from src/core/redux instead',
       },
     ],
   }],
