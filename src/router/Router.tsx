@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
-import NotFoundPage from 'src/components/pages/NotFoundPage';
 import {useRoutes} from 'src/core/router';
+import NotFoundPage from 'src/pages/NotFoundPage';
 
 import * as routes from './routes';
 import {AppRoute} from './routes';
