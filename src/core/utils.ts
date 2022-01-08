@@ -1,8 +1,10 @@
 import {useReducer} from 'react';
 
-export const assertNever = (val: never): never => {
-  throw new Error(`Unexpected never value: ${JSON.stringify(val)}`);
+export const panic = (error_message: string): never => {
+  throw new Error(error_message);
 };
+export const assertNever = (val: never): never =>
+  panic(`Unexpected never value: ${JSON.stringify(val)}`);
 export const assertNeverWithoutPanic = (val: never): void => val;
 
 export const useForceRender = (): (() => void) => useReducer(s => s + 1, 0)[1];
@@ -15,6 +17,7 @@ export const dash = '—';
 // eslint-disable-next-line
 export {nanoid} from '@reduxjs/toolkit';
 
+// * https://habr.com/ru/company/oleg-bunin/blog/499634/
 // * https://spin.atomicobject.com/2018/01/15/typescript-flexible-nominal-typing/
 declare const brand: unique symbol;
 declare const flavor: unique symbol;

@@ -5,7 +5,7 @@ const namingRules = {
     'warn',
     {
       selector: 'default',
-      format: ['camelCase'],
+      format: ['camelCase', 'snake_case'],
       leadingUnderscore: 'allow',
       trailingUnderscore: 'allow',
     },
