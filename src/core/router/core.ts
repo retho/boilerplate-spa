@@ -23,7 +23,7 @@ export type Route<Params extends Record<string, string>, Query> = {
 declare const hrefbrand: unique symbol;
 export type Href = Brand<typeof hrefbrand, string>;
 
-const qsArrayFormat = 'bracket';
+const qsArrayFormat = 'none';
 const parseQuery = (search: string): RawQuery => {
   const query = mapValues(
     qsParse(search, {

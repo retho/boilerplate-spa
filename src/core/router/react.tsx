@@ -44,10 +44,7 @@ export const useHistory = (): UsedHistory => {
 export const useLocation = (): Location => {
   const {history} = useRouterContext();
   const forceRender = useForceRender();
-  useLayoutEffect(() => {
-    const unlisten = history.listen(forceRender);
-    return unlisten();
-  }, []);
+  useLayoutEffect(() => history.listen(forceRender), [history]);
   return history.location;
 };
 
