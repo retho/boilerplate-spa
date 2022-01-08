@@ -1,5 +1,5 @@
 import {isEmpty, merge} from 'lodash-es';
-import {stringifyQuery} from 'src/core/router';
+import {stringifyQuery} from 'src/core/router_old';
 
 import {RequestParams} from './request';
 

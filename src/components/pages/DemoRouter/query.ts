@@ -1,5 +1,5 @@
 import {compact} from 'lodash-es';
-import {Query, Queryable} from 'src/core/router/core';
+import {Query, Queryable} from 'src/core/router_old/core';
 
 import {DemoSort} from './DemoSorter';
 import {queryableIstanceDemoSort} from './utils';

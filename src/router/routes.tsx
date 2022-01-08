@@ -3,14 +3,14 @@ import {Redirect} from 'react-router';
 import DemoPage from 'src/components/pages/DemoPage';
 import DemoRouter, {DemoRouterPageTab} from 'src/components/pages/DemoRouter';
 import {demoRouterPageQueryableInstance} from 'src/components/pages/DemoRouter/query';
-import {stringifyRoute} from 'src/core/router';
+import {stringifyRoute} from 'src/core/router_old';
 import {
   createRoute as createRouteCore,
   emptyQueryableInstance,
   Queryable,
   Route,
   RouteRender,
-} from 'src/core/router/core';
+} from 'src/core/router_old/core';
 
 type AppRouteSettings = null;
 export type AppRoute<P extends Record<string, string>, Q extends unknown> = Route<
