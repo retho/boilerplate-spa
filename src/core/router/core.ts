@@ -20,6 +20,7 @@ export const emptyQueryableInstance: Queryable<Record<string, never>> = {
 export type Route<Params extends Record<string, string>, Query> = {
   pattern: string;
   queryableInstance: Queryable<Query>;
+  __dummyParams: Params;
 };
 
 declare const hrefbrand: unique symbol;

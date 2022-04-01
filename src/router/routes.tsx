@@ -9,10 +9,14 @@ export type AppRoute<Params extends Record<string, string>, Query> = Route<Param
   render: (params: Params, query: Query) => JSX.Element;
 };
 const createRoute = <Query extends unknown>(queryableInstance: Queryable<Query>) => <
-  Params extends Record<string, string>
+  Params extends Record<string, string> = Record<string, never>
 >(
-  route: Omit<AppRoute<Params, Query>, 'queryableInstance'>
-): AppRoute<Params, Query> => ({...route, queryableInstance});
+  route: Omit<AppRoute<Params, Query>, 'queryableInstance' | '__dummyParams'>
+): AppRoute<Params, Query> => ({
+  ...route,
+  queryableInstance,
+  __dummyParams: (null as unknown) as Params,
+});
 
 // =
 export const demo = createRoute(emptyQueryableInstance)({
