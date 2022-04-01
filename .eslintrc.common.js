@@ -17,12 +17,12 @@ const namingRules = {
     },
     {
       selector: 'function',
-      format: ['PascalCase', 'camelCase']
+      format: ['PascalCase', 'camelCase', 'snake_case']
     },
     {
       selector: 'variable',
       types: ['function'],
-      format: ['PascalCase', 'camelCase']
+      format: ['PascalCase', 'camelCase', 'snake_case']
     },
     {
       selector: 'typeLike',
