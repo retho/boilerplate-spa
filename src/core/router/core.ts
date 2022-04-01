@@ -16,11 +16,17 @@ export const emptyQueryableInstance: Queryable<Record<string, never>> = {
   toQuery: () => ({}),
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type Route<Params extends Record<string, string>, Query> = {
+export type Paramable<T extends unknown> = {
+  __dummyParams: T;
+};
+export const declareRouteParams = <T = Record<string, never>>(): Paramable<T> => ({
+  __dummyParams: (null as unknown) as T,
+});
+
+export type Route<Params, Query> = {
   pattern: string;
-  queryableInstance: Queryable<Query>;
-  __dummyParams: Params;
+  query: Queryable<Query>;
+  params: Paramable<Params>;
 };
 
 declare const hrefbrand: unique symbol;
@@ -51,29 +57,32 @@ const stringifyQuery = (rawQuery: RawQuery) =>
         {arrayFormat: qsArrayFormat}
       )}`;
 
-export const matchRoute = <Params extends Record<string, string>, Query>(
+export const matchRoute = <Params, Query>(
   route: Route<Params, Query>,
   pathname: string,
   search: string
 ): null | {params: Params; query: Query} => {
   const urlPattern = new UrlPattern(PUBLIC_URL + route.pattern);
-  const matched: null | Params = urlPattern.match(pathname);
+  const matched: null | Record<string, string> = urlPattern.match(pathname);
 
   if (!matched) return null;
 
-  const params = mapValues(matched, decodeURIComponent) as Params;
-  const query = route.queryableInstance.fromQuery(parseQuery(search));
+  const rawParams = mapValues(matched, decodeURIComponent);
+  const params = (rawParams as unknown) as Params;
+  const query = route.query.fromQuery(parseQuery(search));
 
   return {params, query};
 };
 
-export const stringifyRoute = <Params extends Record<string, string>, Query extends unknown>(
+export const stringifyRoute = <Params, Query>(
   route: Route<Params, Query>,
   params: Params,
   query: Query
 ): Href => {
   const pattern = new UrlPattern(PUBLIC_URL + route.pattern);
-  const rawQuery = route.queryableInstance.toQuery(query);
-  return (pattern.stringify(params && mapValues(params, encodeURIComponent)) +
+  const rawQuery = route.query.toQuery(query);
+  const rawParams =
+    params && typeof params === 'object' ? ((params as unknown) as Record<string, string>) : null;
+  return (pattern.stringify(rawParams && mapValues(rawParams, encodeURIComponent)) +
     (isEmpty(query) ? '' : stringifyQuery(rawQuery))) as Href;
 };

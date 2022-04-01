@@ -48,9 +48,9 @@ export const useLocation = (): Location => {
   return history.location;
 };
 
-export const useRoutes = <R extends Route<Record<string, string>, unknown>>(
+export const useRoutes = <R extends Route<unknown, unknown>>(
   routes: R[]
-): null | {route: R; params: Record<string, string>; query: unknown} => {
+): null | {route: R; params: unknown; query: unknown} => {
   const location = useLocation();
 
   return useMemo(() => {

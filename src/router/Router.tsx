@@ -5,7 +5,7 @@ import NotFoundPage from 'src/pages/NotFoundPage';
 import * as routes from './routes';
 import {AppRoute} from './routes';
 
-const allRoutes = Object.values(routes) as AppRoute<Record<string, string>, unknown>[];
+const allRoutes = Object.values(routes) as AppRoute<unknown, unknown>[];
 
 const Router: FC = () => {
   const currentRoute = useRoutes(allRoutes);
