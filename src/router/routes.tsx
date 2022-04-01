@@ -16,20 +16,20 @@ const createRoute = <Params extends Record<string, string>, Query>(
 // =
 export const demo = createRoute({
   pattern: '/demo',
-  query: emptyQueryableInstance,
   params: declareRouteParams(),
+  query: emptyQueryableInstance,
   render: () => <DemoPage />,
 });
 export const root = createRoute({
   pattern: '/',
-  query: emptyQueryableInstance,
   params: declareRouteParams(),
+  query: emptyQueryableInstance,
   render: () => <Redirect to={stringifyRoute(demo, {}, {})} />,
 });
 
-export const devDemoRouter = createRoute({
+export const demoRouter = createRoute({
   pattern: '/demo/demo-router/:tab',
-  query: demoRouterPageQueryableInstance,
   params: declareRouteParams<{tab: DemoRouterPageTab}>(),
+  query: demoRouterPageQueryableInstance,
   render: ({tab}, query) => <DemoRouter tab={tab} query={query} />,
 });

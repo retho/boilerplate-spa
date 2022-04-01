@@ -30,7 +30,7 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
   const handleTabChange = (newTab: DemoRouterPageTab) =>
     history.push(
       stringifyRoute(
-        routes.devDemoRouter,
+        routes.demoRouter,
         {tab: newTab},
         {
           ...query,
@@ -41,7 +41,7 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     history.replace(
       stringifyRoute(
-        routes.devDemoRouter,
+        routes.demoRouter,
         {tab},
         {
           ...query,
@@ -56,7 +56,7 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
   const handleSortChange = (sort: null | DemoSort<'a' | 'b'>) => {
     history.replace(
       stringifyRoute(
-        routes.devDemoRouter,
+        routes.demoRouter,
         {tab},
         {
           ...query,
@@ -69,7 +69,7 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
   const handleToggleTag = (tag: string) => (active: boolean) => {
     history.replace(
       stringifyRoute(
-        routes.devDemoRouter,
+        routes.demoRouter,
         {tab},
         {
           ...query,
