@@ -1,5 +1,5 @@
 import {History, Location} from 'history';
-import React, {FC, useContext, useLayoutEffect, useMemo} from 'react';
+import React, {FC, useContext, useLayoutEffect, useMemo, useRef} from 'react';
 
 import {panic, useForceRender} from '../utils';
 import {Href, matchRoute, Route} from './core';
@@ -11,9 +11,19 @@ const routerContext = React.createContext<null | RouterContext>(null);
 const useRouterContext = (): RouterContext =>
   useContext(routerContext) || panic('No router context provided');
 
-export const RouterProvider: FC<{history: History}> = ({history, children}) => (
-  <routerContext.Provider value={{history}}>{children}</routerContext.Provider>
-);
+export const RouterProvider: FC<{history: History}> = ({history, children}) => {
+  const forceRender = useForceRender();
+
+  const unlisten = useRef<() => void>();
+  if (!unlisten.current) {
+    unlisten.current = history.listen(forceRender);
+  }
+  useLayoutEffect(() => {
+    return unlisten.current;
+  }, []);
+
+  return <routerContext.Provider value={{history}}>{children}</routerContext.Provider>;
+};
 
 export const Link: FC<{href: Href} & React.AnchorHTMLAttributes<HTMLAnchorElement>> = ({
   href,
@@ -43,8 +53,6 @@ export const useHistory = (): UsedHistory => {
 
 export const useLocation = (): Location => {
   const {history} = useRouterContext();
-  const forceRender = useForceRender();
-  useLayoutEffect(() => history.listen(forceRender), [history]);
   return history.location;
 };
 
