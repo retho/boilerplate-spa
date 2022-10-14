@@ -25,10 +25,6 @@ export const RouterProvider: FC<{history: History}> = ({history, children}) => {
   return <routerContext.Provider value={{history}}>{children}</routerContext.Provider>;
 };
 
-export const Link: FC<{href: Href} & React.AnchorHTMLAttributes<HTMLAnchorElement>> = ({
-  href,
-  ...rest
-}) => <a href={href} {...rest} />;
 export const Redirect: FC<{to: Href}> = ({to}) => {
   const {history} = useRouterContext();
   useLayoutEffect(() => {
