@@ -6,15 +6,16 @@ import {routes} from 'src/router';
 
 const root = bem(module.id, 'DevPage');
 const DevPage: FC = () => {
-  const pattern = routes.demo.pattern;
+  const demoPattern = routes.demo.pattern;
+
   return (
     <div className={root()}>
       <ul>
         {Object.values(routes)
-          .filter(x => x.pattern.startsWith(pattern) && x.pattern !== pattern)
+          .filter(x => x.pattern.startsWith(demoPattern) && x.pattern !== demoPattern)
           .map(r => (
             <li key={r.pattern}>
-              <a href={r.pattern}>{r.pattern}</a>
+              <a href={r.pattern.replaceAll(':', '_')}>{r.pattern}</a>
             </li>
           ))}
       </ul>
