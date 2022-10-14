@@ -23,7 +23,7 @@ const filters2query = (filters: Filters): RawQuery => {
 };
 const query2filters = (query: RawQuery): Filters => {
   return {
-    search: query.search[0] || '',
+    search: query.search?.[0] || '',
     tags: compact(query.tags),
   };
 };

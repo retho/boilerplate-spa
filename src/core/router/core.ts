@@ -3,7 +3,7 @@ import {parse as qsParse, stringify as qsStringifyQuery} from 'query-string';
 import {Brand} from 'src/core/utils';
 import UrlPattern from 'url-pattern';
 
-export type RawQuery = Record<string, [undefined] | string[]>;
+export type RawQuery = Record<string, string[]>;
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
