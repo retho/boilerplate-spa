@@ -7,7 +7,7 @@ export type RawQuery = Record<string, [undefined] | string[]>;
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
-export type Queryable<T extends unknown> = {
+export type Queryable<T> = {
   toQuery: (payload: T) => RawQuery;
   fromQuery: (query: RawQuery) => T;
 };
@@ -16,11 +16,13 @@ export const emptyQueryableInstance: Queryable<Record<string, never>> = {
   toQuery: () => ({}),
 };
 
-export type Paramable<T extends unknown> = {
-  __dummyParams: T;
+export type Paramable<T> = {
+  $type_of_params: T;
 };
-export const declareRouteParams = <T = Record<string, never>>(): Paramable<T> => ({
-  __dummyParams: (null as unknown) as T,
+export const declareRouteParams = <
+  T extends Record<string, string> = Record<string, never>
+>(): Paramable<T> => ({
+  $type_of_params: (null as unknown) as T,
 });
 
 export type Route<Params, Query> = {
@@ -49,6 +51,7 @@ const parseQuery = (search: string): RawQuery => {
 
   return proxy;
 };
+
 const stringifyQuery = (rawQuery: RawQuery) =>
   isEmpty(rawQuery)
     ? ''
@@ -57,27 +60,27 @@ const stringifyQuery = (rawQuery: RawQuery) =>
         {arrayFormat: qsArrayFormat}
       )}`;
 
-export const matchRoute = <Params, Query>(
-  route: Route<Params, Query>,
+export const matchRoute = <ParamsPayload, QueryPayload>(
+  route: Route<ParamsPayload, QueryPayload>,
   pathname: string,
   search: string
-): null | {params: Params; query: Query} => {
+): null | {params: ParamsPayload; query: QueryPayload} => {
   const urlPattern = new UrlPattern(PUBLIC_URL + route.pattern);
   const matched: null | Record<string, string> = urlPattern.match(pathname);
 
   if (!matched) return null;
 
   const rawParams = mapValues(matched, decodeURIComponent);
-  const params = (rawParams as unknown) as Params;
+  const params = (rawParams as unknown) as ParamsPayload;
   const query = route.query.fromQuery(parseQuery(search));
 
   return {params, query};
 };
 
-export const stringifyRoute = <Params, Query>(
-  route: Route<Params, Query>,
-  params: Params,
-  query: Query
+export const stringifyRoute = <ParamsPayload, QueryPayload>(
+  route: Route<ParamsPayload, QueryPayload>,
+  params: ParamsPayload,
+  query: QueryPayload
 ): Href => {
   const pattern = new UrlPattern(PUBLIC_URL + route.pattern);
   const rawQuery = route.query.toQuery(query);
