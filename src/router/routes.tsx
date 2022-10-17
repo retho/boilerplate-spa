@@ -4,7 +4,7 @@ import {emptyQueryableInstance, Redirect, Route} from 'src/core/router';
 import {declareRouteParams} from 'src/core/router/core';
 import DemoPage from 'src/pages/DemoPage';
 import DemoRouter, {DemoRouterPageTab} from 'src/pages/DemoRouter';
-import {demoRouterPageQueryableInstance} from 'src/pages/DemoRouter/query';
+import {iqDemoRouterPage} from 'src/pages/DemoRouter/query';
 
 export type AppRoute<Params, Query> = Route<Params, Query> & {
   render: (params: Params, query: Query) => JSX.Element;
@@ -30,6 +30,6 @@ export const root = createRoute({
 export const demoRouter = createRoute({
   pattern: '/demo/demo-router/:tab',
   params: declareRouteParams<{tab: DemoRouterPageTab}>(),
-  query: demoRouterPageQueryableInstance,
+  query: iqDemoRouterPage,
   render: ({tab}, query) => <DemoRouter tab={tab} query={query} />,
 });

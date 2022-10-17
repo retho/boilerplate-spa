@@ -94,7 +94,7 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
         </div>
         <br />
         <label>search {nbsp}</label>
-        <input value={query.filters.search} onChange={handleSearchChange} />
+        <input value={query.filters.search || ''} onChange={handleSearchChange} />
         <br />
         <br />
         <div className={bemRoot('tags')}>
@@ -108,8 +108,8 @@ const DevDemoRouter: FC<Props> = ({tab, query}) => {
           ))}
         </div>
         <br />
-        <DemoSorter title="a" field="a" value={query.sort} onChange={handleSortChange} />
-        <DemoSorter title="b" field="b" value={query.sort} onChange={handleSortChange} />
+        <DemoSorter title="a" field="a" value={query.sort || null} onChange={handleSortChange} />
+        <DemoSorter title="b" field="b" value={query.sort || null} onChange={handleSortChange} />
       </div>
       <div className={bemRoot('preview')}>
         {decodeURIComponent(location.search)}
