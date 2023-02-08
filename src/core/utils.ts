@@ -5,7 +5,7 @@ export const panic = (error_message: string): never => {
 };
 export const assertNever = (val: never): never =>
   panic(`Unexpected never value: ${JSON.stringify(val)}`);
-export const assertNeverWithoutPanic = (val: never): void => val;
+export const assertNeverNoPanic = (val: never): void => val;
 
 export const useForceRender = (): (() => void) => useReducer(s => s + 1, 0)[1];
 
@@ -19,10 +19,23 @@ export {nanoid} from '@reduxjs/toolkit';
 
 // * https://habr.com/ru/company/oleg-bunin/blog/499634/
 // * https://spin.atomicobject.com/2018/01/15/typescript-flexible-nominal-typing/
+// * https://habr.com/ru/company/oleg-bunin/blog/499634/
 declare const brand: unique symbol;
-declare const flavor: unique symbol;
-export type Brand<U extends symbol, T> = {[brand]: U} & T;
-export type Flavor<U extends symbol, T> = {[flavor]?: U} & T;
+export type Brand<TypeName extends string, T> = {[brand]: TypeName} & T;
+// *
+declare const meta: unique symbol;
+export type Strong<TypeName extends string, DuckType> = {
+  [meta]: {
+    name: TypeName;
+    actualType: DuckType;
+  };
+};
+export const unsafe_strong_pack = <DuckType, StrongType extends Strong<string, DuckType>>(
+  value: DuckType
+): StrongType => (value as unknown) as StrongType;
+export const unsafe_strong_unpack = <DuckType, StrongType extends Strong<string, DuckType>>(
+  value: StrongType
+): DuckType => (value as unknown) as DuckType;
 
 // * https://stackoverflow.com/questions/33915459/algebraic-data-types-in-typescript
 // * https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions

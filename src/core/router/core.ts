@@ -31,8 +31,7 @@ export type Route<Params, Query> = {
   params: Paramable<Params>;
 };
 
-declare const hrefbrand: unique symbol;
-export type Href = Brand<typeof hrefbrand, string>;
+export type Href = Brand<'Href', string>;
 
 const qsArrayFormat = 'none';
 const parseQuery = (search: string): RawQuery => {
