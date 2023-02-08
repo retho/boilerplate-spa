@@ -2,8 +2,8 @@ import './styles.scss';
 
 import React, {FC, Fragment} from 'react';
 import {bem} from 'src/core/bem';
+import {nbsp} from 'src/core/common';
 import {stringifyRoute, useHistory, useLocation} from 'src/core/router';
-import {nbsp} from 'src/core/utils';
 import {routes} from 'src/router';
 
 import DemoSorter, {DemoSort} from './DemoSorter';

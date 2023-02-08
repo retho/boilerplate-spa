@@ -1,33 +1,46 @@
-import {useMemo} from 'react';
-import {useStore} from 'src/core/redux';
-import {ADT, err, ok, Result} from 'src/core/utils';
-import {AppStore} from 'src/store';
-import {logoutForce} from 'src/store/slices/auth';
+import {ADT} from 'src/core/common';
 
-type ReplyErrorApi = {
+const ls_token_key = 'token';
+export const getAuthToken = (): null | string => localStorage.getItem(ls_token_key);
+export const saveAuthToken = (token: null | string): void =>
+  token ? localStorage.setItem(ls_token_key, token) : localStorage.removeItem(ls_token_key);
+
+const unauthorizedEventName = 'app-unauthorized-event';
+export const emitUnauthorizedEvent = (): boolean =>
+  document.dispatchEvent(new Event(unauthorizedEventName));
+export const addUnauthorizedEventListener = (callback: () => void): void =>
+  document.addEventListener(unauthorizedEventName, callback);
+export const removeUnauthorizedEventListener = (callback: () => void): void =>
+  document.removeEventListener(unauthorizedEventName, callback);
+
+type ReplyApiError<ApiErr> = {
   status: number;
   headers: Headers;
-  body: unknown;
+  body: ApiErr;
 };
-type ReplyError = ADT<'api', ReplyErrorApi> | ADT<'unauthorized'> | ADT<'unknown', {err: unknown}>;
-type ReplyPayload<D> = {
+type ReplyPayload<Datum> = {
   status: number;
   headers: Headers;
-  body: D;
+  body: Datum;
 };
-type Reply<D> = Result<ReplyError, ReplyPayload<D>>;
+type Reply<Datum, ApiErr> =
+  | ADT<'ok', ReplyPayload<Datum>>
+  | ADT<'api-error', ReplyApiError<ApiErr>>
+  | ADT<'unauthorized'>
+  | ADT<'unknown-error', {err: unknown}>;
 
-export type RequestParams<D> = {
-  res2data: (res: Response) => Promise<D>;
+export type RequestParams<Datum, ApiErr = unknown> = {
+  res2data: (res: Response) => Promise<Datum>;
+  res2err: (res: Response) => Promise<ApiErr>;
   path: string;
   config?: RequestInit;
 };
-export type Requester = <D>(params: RequestParams<D>) => Promise<Reply<D>>;
-export const genRequest = (store: AppStore): Requester => <D>(
-  params: RequestParams<D>
-): Promise<Reply<D>> => {
-  const {path, res2data, config} = params;
-  const token = store.getState().auth.token;
+
+export const req = <Datum, ApiErr>(
+  params: RequestParams<Datum, ApiErr>
+): Promise<Reply<Datum, ApiErr>> => {
+  const {path, res2data, res2err, config} = params;
+  const token = getAuthToken();
   return (
     fetch(path, {
       ...config,
@@ -39,46 +52,37 @@ export const genRequest = (store: AppStore): Requester => <D>(
       credentials: 'omit',
     })
       .then(
-        async (res): Promise<Reply<D>> => {
+        async (res): Promise<Reply<Datum, ApiErr>> => {
           if (res.ok) {
             const body = await res2data(res);
-            return ok({
+            return {
+              kind: 'ok',
               status: res.status,
               headers: res.headers,
               body,
-            });
+            };
           }
           if (res.status === 401) {
-            store.dispatch(logoutForce());
-            return err({kind: 'unauthorized'});
+            emitUnauthorizedEvent();
+            return {kind: 'unauthorized'};
           }
-          const body = await res
-            .clone()
-            .json()
-            // eslint-disable-next-line no-restricted-syntax
-            .catch(() => res.clone().text());
-          return err({
-            kind: 'api',
+          const body = await res2err(res);
+          return {
+            kind: 'api-error',
             status: res.status,
             headers: res.headers,
             body,
-          });
+          };
         }
       )
       // eslint-disable-next-line no-restricted-syntax
       .catch(
-        (error): Reply<D> => {
-          return err({
-            kind: 'unknown',
+        (error): Reply<Datum, ApiErr> => {
+          return {
+            kind: 'unknown-error',
             err: error,
-          });
+          };
         }
       )
   );
-};
-
-export const useRequest = (): Requester => {
-  const store = useStore();
-  const request = useMemo(() => genRequest(store), []);
-  return request;
 };

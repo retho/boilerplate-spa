@@ -1,22 +1,23 @@
 import {loginReq} from 'src/api/auth';
 import {createSlice, createSliceName, PayloadAction} from 'src/core/redux';
+import {getAuthToken, req, saveAuthToken} from 'src/core/request';
 import {AppThunk} from 'src/store';
 import {notifyError} from 'src/utils/toastify';
 
 const sliceName = createSliceName(module.id, 'auth');
 
 type State = {
-  token: null | string;
+  isAuthorized: boolean;
 };
 const defaultState: State = {
-  token: null,
+  isAuthorized: false,
 };
 const slice = createSlice({
   name: sliceName,
-  initialState: {...defaultState, token: localStorage.getItem('token')},
+  initialState: {...defaultState, isAuthorized: !!getAuthToken()},
   reducers: {
     reset: () => defaultState,
-    setToken: (state, {payload}: PayloadAction<null | string>) => ({
+    setIsAuthorized: (state, {payload}: PayloadAction<boolean>) => ({
       ...state,
       token: payload,
     }),
@@ -25,19 +26,20 @@ const slice = createSlice({
 
 export const {reducer} = slice;
 export const {reset} = slice.actions;
-const {setToken} = slice.actions;
+const {setIsAuthorized} = slice.actions;
 
-export const login = (username: string): AppThunk => async (dispatch, getState, {request}) => {
-  const reply = await request(loginReq(username));
+export const login = (username: string): AppThunk => async dispatch => {
+  const reply = await req(loginReq(username));
   if (reply.kind === 'ok') {
-    localStorage.setItem('token', reply.payload.body.token);
-    dispatch(setToken(reply.payload.body.token));
-  } else if (reply.error.kind !== 'unauthorized') {
+    saveAuthToken(reply.body.token);
+    dispatch(setIsAuthorized(!!reply.body.token));
+  } else if (reply.kind !== 'unauthorized') {
     notifyError('Something went wrong');
   }
 };
 
 export const logoutForce = (): AppThunk => async dispatch => {
+  saveAuthToken(null);
   localStorage.clear();
-  dispatch(setToken(null));
+  dispatch(setIsAuthorized(false));
 };

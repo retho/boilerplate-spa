@@ -1,9 +1,7 @@
 // eslint-disable-next-line no-restricted-imports
-import {useSelector as useSelectorOrigin} from 'react-redux';
+import {useDispatch, useSelector as useSelectorOrigin} from 'react-redux';
 import {AppRootState} from 'src/store';
 
-// eslint-disable-next-line no-restricted-imports
-export {useDispatch, useStore} from 'react-redux';
 // eslint-disable-next-line no-restricted-imports
 export {createSlice, createAction, combineReducers} from '@reduxjs/toolkit';
 // eslint-disable-next-line no-restricted-imports
@@ -26,7 +24,9 @@ const slicenameCreator = () => {
 };
 export const createSliceName = slicenameCreator();
 
-export const useSelector = <TSelected>(
+export const useAppSelector = <TSelected>(
   selector: (state: AppRootState) => TSelected,
   equalityFn?: (left: TSelected, right: TSelected) => boolean
 ): TSelected => useSelectorOrigin(selector, equalityFn);
+
+export const useAppDispatch = useDispatch;

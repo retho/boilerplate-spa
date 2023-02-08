@@ -16,21 +16,26 @@ export type ReqOptions = {
   params?: Record<string, string | number | boolean | readonly string[] | null | undefined>;
   body?: unknown;
 };
-const req = <D>(
-  path: string,
-  opts: ReqOptions,
-  res2data: (res: Response) => Promise<D>,
-  init?: RequestInit
-): RequestParams<D> => {
+const req = <Datum, ApiErr>(args: {
+  path: string;
+  opts: ReqOptions;
+  res2data: (res: Response) => Promise<Datum>;
+  res2err: (res: Response) => Promise<ApiErr>;
+  init?: RequestInit;
+}): RequestParams<Datum, ApiErr> => {
+  const {path, opts, res2data, res2err, init} = args;
   const {method = 'get', params, body} = opts || {};
   return {
     res2data,
+    res2err,
     path: path + (isEmpty(params) ? '' : '?' + stringifyQuery(params || {})),
     config: merge({}, configurationDefault, init, {method}, body && {body: JSON.stringify(body)}),
   };
 };
 
-export const reqJson = <D>(path: string, opts?: ReqOptions): RequestParams<D> =>
-  req(path, opts || {}, res => res.json());
-export const reqBlob = (path: string, opts?: ReqOptions): RequestParams<Blob> =>
-  req(path, opts || {}, res => res.blob());
+const res2err = (res: Response): Promise<unknown> => res.text();
+
+export const reqJson = <Datum>(path: string, opts?: ReqOptions): RequestParams<Datum, unknown> =>
+  req({path, opts: opts || {}, res2data: res => res.json(), res2err});
+export const reqBlob = (path: string, opts?: ReqOptions): RequestParams<Blob, unknown> =>
+  req({path, opts: opts || {}, res2data: res => res.blob(), res2err});

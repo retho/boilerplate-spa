@@ -1,13 +1,11 @@
 // eslint-disable-next-line no-restricted-imports
 import {Action, configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 import {ThunkAction} from 'redux-thunk';
-import {genRequest, Requester} from 'src/core/request';
 
 import {reducer} from './root';
 
-const thunkExtraArgument = {
-  request: (null as unknown) as Requester,
-};
+type ThunkExtraArg = {dummyValue: null};
+const thunkExtraArgument: ThunkExtraArg = {dummyValue: null};
 
 const store = configureStore({
   reducer,
@@ -19,7 +17,6 @@ const store = configureStore({
     }),
   ],
 });
-thunkExtraArgument.request = genRequest(store);
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('./root', () => {

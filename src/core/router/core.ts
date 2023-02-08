@@ -1,6 +1,6 @@
 import {isEmpty, mapValues} from 'lodash-es';
 import {parse as qsParse, stringify as qsStringifyQuery} from 'query-string';
-import {Brand} from 'src/core/utils';
+import {Brand} from 'src/core/common';
 import UrlPattern from 'url-pattern';
 
 export type RawQuery = Record<string, undefined | string[]>;

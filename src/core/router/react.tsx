@@ -1,7 +1,7 @@
 import {History, Location} from 'history';
 import React, {FC, useContext, useLayoutEffect, useMemo, useRef} from 'react';
 
-import {panic, useForceRender} from '../utils';
+import {panic, useForceRender} from '../common';
 import {Href, matchRoute, Route} from './core';
 
 type RouterContext = {
