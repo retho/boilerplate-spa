@@ -1,30 +1,17 @@
 import {identity} from 'lodash-es';
-import {
-  iqgenForArray,
-  iqgenForOptional,
-  iqgenForRecord,
-  iqgenForString,
-  withPrefix,
-} from 'src/core/router/queryable';
+import {ExtractQueryable} from 'src/core/router/core';
+import {iqgenForArray, iqgenForRecord, iqgenForString, withPrefix} from 'src/core/router/queryable';
 
-import {DemoSort, iqDemoSort} from './DemoSorter';
+import {iqDemoSort} from './DemoSorter';
 
-type Filters = {
-  search: null | string;
-  tags: string[];
-};
-
-const iqFilters = iqgenForRecord<Filters>({
+const iqFilters = iqgenForRecord({
   search: iqgenForString('search'),
   tags: iqgenForArray('tags', {toString: identity, fromString: identity}),
 });
 
 type SampleSortColumns = 'a' | 'b';
-export type QueryPayload = {
-  filters: Filters;
-  sort?: null | DemoSort<SampleSortColumns>;
-};
-export const iqDemoRouterPage = iqgenForRecord<QueryPayload>({
+export const iqDemoRouterPage = iqgenForRecord({
   filters: iqFilters,
-  sort: withPrefix('customPrefix', iqgenForOptional(iqDemoSort())),
+  sort: withPrefix('customPrefix', iqDemoSort<SampleSortColumns>()),
 });
+export type QueryDemoRouterPage = ExtractQueryable<typeof iqDemoRouterPage>;

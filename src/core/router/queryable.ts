@@ -1,6 +1,6 @@
 import {compact, mapKeys} from 'lodash-es';
 
-import {Queryable, RawQuery} from './core';
+import {ExtractQueryable, Queryable, RawQuery} from './core';
 2;
 export const withPrefix = <V extends unknown>(
   prefix: string,
@@ -24,10 +24,6 @@ export const withPrefix = <V extends unknown>(
   };
 };
 
-export const iqgenForOptional = <V extends unknown>(
-  iq: Queryable<null | V>
-): Queryable<undefined | null | V> => iq as Queryable<undefined | null | V>;
-
 export const iqgenForString = <Val extends string>(prefix: string): Queryable<null | Val> => ({
   toQuery: val => (val ? {[prefix]: [val]} : {}),
   fromQuery: query => {
@@ -49,12 +45,12 @@ export const iqgenForArray = <Val extends string>(
   },
 });
 
-type InferComposedQueryables<R extends Record<string, unknown>> = {
-  [K in keyof R]: Queryable<R[K]>;
+type InferComposedQueryRecord<Q> = {
+  [K in keyof Q]: ExtractQueryable<Q[K]>;
 };
-export const iqgenForRecord = <R extends Partial<Record<string, unknown>>>(
-  iqs: InferComposedQueryables<R>
-): Queryable<R> => ({
+export const iqgenForRecord = <T extends Record<string, unknown>>(
+  iqs: T
+): Queryable<InferComposedQueryRecord<T>> => ({
   toQuery: payload => {
     return Object.entries(iqs)
       .map(([key, iq]) => (iq as Queryable<unknown>).toQuery(payload[key]))
@@ -67,6 +63,28 @@ export const iqgenForRecord = <R extends Partial<Record<string, unknown>>>(
         return [colId, val];
       })
     );
-    return payload as R;
+    return payload as InferComposedQueryRecord<T>;
   },
 });
+
+// type InferComposedQueryables<R extends Record<string, unknown>> = {
+//   [K in keyof R]: Queryable<R[K]>;
+// };
+// export const iqgenForRecord = <R extends Partial<Record<string, unknown>>>(
+//   iqs: InferComposedQueryables<R>
+// ): Queryable<R> => ({
+//   toQuery: payload => {
+//     return Object.entries(iqs)
+//       .map(([key, iq]) => (iq as Queryable<unknown>).toQuery(payload[key]))
+//       .reduce((acc, c) => ({...acc, ...c}), {});
+//   },
+//   fromQuery: query => {
+//     const payload = Object.fromEntries(
+//       Object.entries(iqs).map(([colId, iq]) => {
+//         const val = (iq as Queryable<unknown>).fromQuery(query);
+//         return [colId, val];
+//       })
+//     );
+//     return payload as R;
+//   },
+// });

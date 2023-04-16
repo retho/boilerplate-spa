@@ -15,6 +15,7 @@ export const emptyQueryableInstance: Queryable<Record<string, never>> = {
   fromQuery: () => ({}),
   toQuery: () => ({}),
 };
+export type ExtractQueryable<T> = T extends Queryable<infer Q> ? Q : never;
 
 export type Paramable<T> = {
   $type_of_params: T;
@@ -63,7 +64,7 @@ export const matchRoute = <ParamsPayload, QueryPayload>(
   route: Route<ParamsPayload, QueryPayload>,
   pathname: string,
   search: string
-): null | {params: ParamsPayload; query: QueryPayload} => {
+): null | {params: ParamsPayload; query: null | QueryPayload} => {
   const urlPattern = new UrlPattern(PUBLIC_URL + route.pattern);
   const matched: null | Record<string, string> = urlPattern.match(pathname);
 

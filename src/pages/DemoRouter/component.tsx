@@ -8,7 +8,7 @@ import {routes} from 'src/router';
 
 import DemoSorter, {DemoSort} from './DemoSorter';
 import DemoTag from './DemoTag';
-import {QueryPayload} from './query';
+import {QueryDemoRouterPage} from './query';
 
 export enum DemoRouterPageTab {
   tab1 = 'first-tab',
@@ -21,7 +21,7 @@ const tags = ['tag1', 'tag2', 'tag3'];
 const bemRoot = bem(module.id, 'DemoRouter');
 type Props = {
   tab: DemoRouterPageTab;
-  query: QueryPayload;
+  query: QueryDemoRouterPage;
 };
 const DevDemoRouter: FC<Props> = ({tab, query}) => {
   const location = useLocation();
