@@ -1,4 +1,4 @@
-import {useReducer} from 'react';
+import {useCallback, useReducer, useRef} from 'react';
 
 export const panic = (error_message: string): never => {
   throw new Error(error_message);
@@ -47,3 +47,17 @@ export type ResultErr<E> = ADT<'err', {error: E}>;
 export type Result<E, R> = ResultErr<E> | ResultOk<R>;
 export const ok = <R>(payload: R): ResultOk<R> => ({kind: 'ok', payload});
 export const err = <E>(error: E): ResultErr<E> => ({kind: 'err', error});
+
+// * https://beta.reactjs.org/apis/react/useEvent
+// * https://github.com/reactjs/rfcs/blob/useevent/text/0000-useevent.md
+export const useEvent = <F extends (...args: unknown[]) => unknown>(cb: F): F => {
+  const handlerRef = useRef<F>(cb);
+  handlerRef.current = cb;
+  return useCallback<F>(
+    ((...args) => {
+      const fn = handlerRef.current;
+      return fn(...args);
+    }) as F,
+    []
+  );
+};
